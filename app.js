@@ -1,8 +1,10 @@
 const http = require('http');
 const pug = require('pug');
+const fs = require('fs');
 const WebSocket = require('ws').Server;
 
-const port = 3000;
+const port = require('./config').server.port;
+
 const htmlEntities = async str => {
     return String(str)
         .replace(/&/g, '&amp;').replace(/</g, '&lt;')
@@ -13,12 +15,20 @@ let template;
 let connections = [];
 
 const server = http.createServer((req, res) => {
-    console.log(`GET - ${Date().toString()} - Main path is reached`);
+    console.log(`GET - ${Date().toString()} - ${req.url}`);
+    if(req.url === '/'){
+        template = pug.compileFile('./webSocket.pug');
 
-    template = pug.compileFile('./webSocket.pug');
+        res.end(template());
+    } else if(req.url === '/chatStyle.css'){
+        res.writeHeader(200, {'Content-type':'text/css'});
 
-    res.write(template());
-    res.end();
+        fs.readFile('./chatStyle.css', async (err, file) => {
+            if (err) console.error(err);
+
+            await res.end(file);
+        });
+    }
 });
 
 
