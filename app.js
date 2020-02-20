@@ -2,7 +2,8 @@ const http = require('http');
 const pug = require('pug');
 const WebSocket = require('ws').Server;
 
-const port = 3000;
+const port = require('config').server.port;
+
 const htmlEntities = async str => {
     return String(str)
         .replace(/&/g, '&amp;').replace(/</g, '&lt;')
