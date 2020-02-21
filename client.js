@@ -41,10 +41,6 @@ if (!window.WebSocket) {
 
     connection.onopen = async () => {
 
-        if( firstUser.lastChild.nodeName === 'SPAN'  )
-            firstUser.innerHTML = '';
-        else if(firstUser.lastChild.nodeName === 'SPAN')
-            secondUser.innerHTML = '';
 
     connection.onerror = async (error) => {
         console.error(error)
@@ -52,8 +48,15 @@ if (!window.WebSocket) {
 
     connection.onmessage = async (receivedMessage) => {
         const message =  JSON.parse(receivedMessage.data);
-
+        console.log(message);
         message ? true : console.error('Bad message');
+
+        if (message.type === 'name') {
+            if( firstUser.lastChild.nodeName === 'SPAN'  )
+                firstUser.innerHTML = message.data;
+            else if(secondUser.lastChild.nodeName === 'SPAN')
+                secondUser.innerHTML =  message.data;
+        }
 
         if(message.type === 'message'){
             await addMessage(message)
@@ -65,10 +68,6 @@ if (!window.WebSocket) {
             user = inputAuth.value;
 
             connection.send(user);
-
-            firstUser.innerHTML === '' ?
-                firstUser.innerHTML = inputAuth.value :
-                secondUser.innerHTML = inputAuth.value;
 
             authBlock.style.display = 'none';
             messageBlock.style.display = 'flex';

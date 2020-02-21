@@ -56,7 +56,9 @@ wsServer.on('request', function(request) {
         if( username === false ) {
             username = message.utf8Data;
 
-            connection.sendUTF( JSON.stringify({ type: 'test', data: username }));
+            for (const client of connections) {
+                client.sendUTF( JSON.stringify({ type: 'name', data: username }));
+            }
 
             console.log((Date().toString()) + '- User is known as: ' + username);
         } else {
