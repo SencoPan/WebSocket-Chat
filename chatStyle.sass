@@ -1,36 +1,71 @@
 .content
   display: flex
-<<<<<<< HEAD
   flex-direction: column
   color: slategrey
+  font-family: Bahnschrift
+
   .UI
     display: flex
-    width: 40em
-    height: 50em
-    background: aliceblue
-
+    width: 50em
+    height: 30em
+    background: black
+    color: gainsboro
+    border: darkgrey solid .05em
     .first-user
-      background: red
-      width: 7rem
+
 
     .second-user
-      background: aqua
-      width: 7rem
+
+
+    .first-user, .second-user
+      color: #285473
+      text-align: center
+      background: #edeef0
+      width: 10rem
+
 
     .message-box
-      background: blue
-      width: 26rem
+      display: flex
+      background: white
+      width: 30rem
+      flex-direction: column
+      justify-content: end
+
+      .message
+        padding: .05em 1em .05em 1em
+        display: flex
+        flex-direction: row
+        p
+          padding: 0
+          margin: 0
+        .name
+          color: #666
+
+
+      .input
+        display: flex
+        justify-content: center
+        height: 2em
+        border-top: darkgrey solid .05em
+        border-bottom: darkgrey solid .05em
+        background: #fdfdfd
+        input
+          margin: auto
+          height: 2em
+
+          &:not([type="submit"])
+            width: 28em
+            border: #91a9c1 solid .01em
+            border-radius: .3em
+          &:not([type="text"])
+            border-radius: .05em
+            width: 5em
+            background: whitesmoke
+            border: #91a9c1 solid .05em
+            color: slategrey
+            cursor: pointer
 
   h1, .UI
     margin: 0 auto 0 auto
-=======
 
-  .UI
-    display: flex
-    width: 20em
-    height: 20em
-    color: slategrey
 
-body
-  color: blue
->>>>>>> origin/master

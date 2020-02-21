@@ -1,9 +1,35 @@
 doctype !html
 
 head
+    meta(charset='UTF-8')
     block links
+        link(rel='stylesheet' type='text/css' href='./chatStyle.css')
     block title
+
 body
-    block content
-    h1 Websocket App
+    .content
+        block content
+        h1 Websocket App
+
+        .UI
+            .first-user
+                .info
+                    p Name: #{name || 'User - One'}
+            .message-box
+                .messages
+                    //Template message
+                    .message
+                        p.name #{name || 'User'} : &nbsp;
+                        p Hi faggot
+                    .message
+                        p.name #{name || 'User'} : &nbsp;
+                        p Hi faggot 123
+                .input
+                    input(type='text')
+                    input(type='submit' value='Send')
+            .second-user
+                .info
+                    p Name: #{name || 'User - Two'}
+
+
 block scripts
