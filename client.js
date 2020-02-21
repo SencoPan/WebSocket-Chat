@@ -3,8 +3,19 @@ const inputAuth = document.getElementsByTagName('input')[0];
 const input = document.getElementsByTagName('input')[2];
 const authBlock = document.getElementsByClassName('auth')[0];
 const messageBlock = document.getElementsByClassName('message-sender')[0];
-const firstUser = document.body.querySelector('.first-user .info');
-const secondUser = document.body.querySelector('.second-user .info');
+const userBlock = document.getElementsByClassName('user-heap')[0];
+
+const createUser = async (info) => {
+    const newUser = document.createElement('div');
+
+    newUser.className = 'user';
+
+    newUser.insertAdjacentHTML('beforeend', `
+            <p > ${info} </p>
+    `);
+
+    return newUser;
+};
 
 const createMessage = async (info) => {
     const newMessage = document.createElement('div');
@@ -21,10 +32,15 @@ const createMessage = async (info) => {
 
 const addMessage = async (message) => {
     console.log('message added');
-
     const newMessage = await createMessage(message);
-
     messageBox.append(newMessage)
+};
+
+const addUser = async user => {
+    console.log('User added', user
+    );
+    const newUser = await createUser(user);
+    userBlock.append(newUser);
 };
 
 let user = false;
@@ -39,7 +55,6 @@ if (!window.WebSocket) {
 
     connection.onopen = async () => {
 
-
     connection.onerror = async (error) => {
         console.error(error)
     };
@@ -47,13 +62,12 @@ if (!window.WebSocket) {
     connection.onmessage = async (receivedMessage) => {
         const message =  JSON.parse(receivedMessage.data);
 
+        console.log(message)
+
         message ? true : console.error('Bad message');
 
         if (message.type === 'name') {
-            if( firstUser.lastChild.nodeName === 'SPAN'  )
-                firstUser.innerHTML = message.data;
-            else if(secondUser.lastChild.nodeName === 'SPAN')
-                secondUser.innerHTML =  message.data;
+            await addUser(message.data)
         }
 
         if(message.type === 'message'){

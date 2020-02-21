@@ -9,12 +9,18 @@ head
 body
     .content
         block content
-        h1 Websocket App
-
+        .app-header
+            .app-name
+                h1 Websocket App
         .UI
-            .first-user
+            .user-heap
                 .info
-                    span User in not connected right now.
+                    p This chat features
+                    hr
+                .user
+                    p Чебупель
+                .user
+                    p Чебупель
             .message-box
                 .messages
 
@@ -24,10 +30,5 @@ body
                 .input.message-sender(style={display:'none'})
                     input(type='text' placeholder='Введите сообщение')
                     input(type='submit' value='Send')
-            .second-user
-                .info
-                    span User in not connected right now.
-
 
 block scripts
-script(src='./client.js')

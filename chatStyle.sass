@@ -1,35 +1,61 @@
+body
+  background: #edeef0
+  margin: 0
 .content
   display: flex
   flex-direction: column
   color: slategrey
   font-family: Bahnschrift
 
+  .app-header
+    margin-bottom: .7em
+    background: #285473
+    .app-name
+      display: flex
+      width: 50em
+      margin: 0 auto 0 auto
+      color: white
+      h1
+        font-size: 1.8em
+        margin: 0 auto 0 .3em
+
   .UI
     display: flex
     width: 50em
-    height: 30em
-    background: black
+    height: calc(100vh - 2.5em - 0.7em)
     color: gainsboro
-    border: darkgrey solid .05em
-    .first-user
+    margin: 0 auto 0 auto
 
+    .user-heap, .message-box
+      border-radius: .3em
 
-    .second-user
-
-
-    .first-user, .second-user
+    .user-heap
       color: #285473
-      text-align: center
-      background: #edeef0
-      width: 10rem
+      text-align: left
+      background: white
+      width: 13rem
 
+      .info
+        p
+          margin: .5em auto auto .5rem
+
+      .user
+        font-size: .8em
+        text-align: left
+        margin-left: .5em
+
+      hr
+        background-color: #eee
+        border: 0
+        height: .1em
 
     .message-box
       display: flex
       background: white
-      width: 30rem
+      width: 37rem
       flex-direction: column
       justify-content: end
+      margin-left: 1em
 
       .message
         padding: .05em 1em .05em 1em
@@ -41,31 +67,33 @@
         .name
           color: #666
 
-
       .input
         display: flex
         justify-content: center
-        height: 2em
-        border-top: darkgrey solid .05em
-        border-bottom: darkgrey solid .05em
+        height: 2.5em
+        border-top: darkgrey solid .02em
+        border-bottom: darkgrey solid .02rem
+
+        border-bottom-left-radius: .3em
+        border-bottom-right-radius: .3em
         background: #fdfdfd
         input
-          margin: auto
-          height: 2em
+          height: 2.2em
 
           &:not([type="submit"])
-            width: 28em
+            width: 35em
             border: #91a9c1 solid .01em
             border-radius: .3em
+            padding: .5em
+            margin: auto
+            margin-right: 0
+
           &:not([type="text"])
-            border-radius: .05em
+            border-radius: .3em
             width: 5em
             background: whitesmoke
             border: #91a9c1 solid .05em
             color: slategrey
             cursor: pointer
-
-  h1, .UI
-    margin: 0 auto 0 auto
-
-
+            margin: auto
+            margin-left: .5em
