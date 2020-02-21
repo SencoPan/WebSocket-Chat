@@ -52,8 +52,9 @@ wsServer.on('request', function(request) {
         message.type === 'utf8' ?
             console.log(`WS - ${Date().toString()} - Got message - ${message.utf8Data}`) :
             console.log(`WS - ${Date().toString()} - Got bad message`);
-
-        if( username === false ) {
+        if (message.utf8Data.type === 'close'){
+            connection.close();
+        } else if( username === false ) {
             username = message.utf8Data;
 
             for (const client of connections) {

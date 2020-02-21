@@ -62,7 +62,13 @@ if (!window.WebSocket) {
 
     connection.onclose = async () => {
         console.log(connection);
-        connection = await new WebSocket('ws://127.0.0.1:3000');
+
+        connection.send({
+            type:'close',
+            message: 'Page is reloading.'
+        });
+
+        connection.close();
     };
 
     connection.onmessage = async (receivedMessage) => {
