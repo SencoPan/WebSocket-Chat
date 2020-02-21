@@ -17,15 +17,12 @@ body
                     p Name: #{name || 'User - One'}
             .message-box
                 .messages
-                    //Template message
-                    .message
-                        p.name #{name || 'User'} : &nbsp;
-                        p Hi faggot
-                    .message
-                        p.name #{name || 'User'} : &nbsp;
-                        p Hi faggot 123
-                .input
-                    input(type='text')
+
+                .input.auth
+                    input(type='text' placeholder='Введите свое имя')
+                    input(type='submit' value='Send')
+                .input.message-sender(style={display:'none'})
+                    input(type='text' placeholder='Введите сообщение')
                     input(type='submit' value='Send')
             .second-user
                 .info
@@ -33,3 +30,4 @@ body
 
 
 block scripts
+script(src='./client.js')

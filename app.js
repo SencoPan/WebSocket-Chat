@@ -1,7 +1,7 @@
 const http = require('http');
 const pug = require('pug');
 const fs = require('fs');
-const WebSocket = require('ws').Server;
+const WebSocket = require('websocket').server;
 
 const port = require('./config').server.port;
 
@@ -28,6 +28,14 @@ const server = http.createServer((req, res) => {
 
             await res.end(file);
         });
+    } else if (req.url === '/client.js'){
+        res.writeHeader(200, {'Content-type':'text/javascript'});
+
+        fs.readFile('./client.js', async (err, file) => {
+            if (err) console.error(err);
+
+            await res.end(file);
+        });
     }
 });
 
@@ -36,10 +44,10 @@ server.listen(3000, () => {
     console.log(`${Date().toString()} - Server is launched at localhost:${port}`)
 });
 
-const wsServer = new WebSocket({ server });
+const wsServer = new WebSocket({ httpServer: server });
 
-wsServer.on('request', async request => {
-    console.log(`${Date.now().toString()} - Request from origin: ${request.origin}`);
+wsServer.on('request', function(request) {
+    console.log(`WS - ${Date().toString()} - Request from origin: ${request.origin}`);
 
     let connection = request.accept(null, request.origin);
     let username = false;
@@ -47,26 +55,26 @@ wsServer.on('request', async request => {
     const index = connections.push(connection) - 1;
 
     connection.on('message', async (message) => {
-        message.type === 'UTF-8' ? console.log(`${Date.now().toString()} - got message - ${message}`) : console.log(`${Date.now().toString()} - Got bad message`);
+        message.type === 'utf8' ? console.log(`WS - ${Date().toString()} - Got message - ${message.utf8Data}`) : console.log(`WS - ${Date().toString()} - Got bad message`);
 
         if( username === false ) {
-            username = await htmlEntities(message.utf8date);
+            username = await htmlEntities(message.utf8Data);
 
             connection.sendUTF( JSON.stringify({ type: 'test', data: username }));
 
             console.log((Date().toString()) + '- User is known as: ' + username);
         } else {
-            console.log(`${Date.now().toString()} - Received message from: ${username} : ${message}`)
+            console.log(`WS - ${Date().toString()} - Received message from: ${username} : ${message.utf8Data}`);
 
-            const data = {
+            const json = {
+                type: 'message',
                 time: Date().toString(),
-                text: htmlEntities(message.utf8date),
+                text: message.utf8Data,
                 author: username
             };
-            const json = { type: 'message', text: message }
 
             for (const client of connections) {
-                await client.sendUTF(json)
+                await client.sendUTF(JSON.stringify(json))
             }
         }
     });
