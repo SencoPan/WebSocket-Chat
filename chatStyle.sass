@@ -5,7 +5,7 @@ body
   display: flex
   flex-direction: column
   color: slategrey
-  font-family: Bahnschrift
+  font-family: Bahnschrift, monospace
 
   .app-header
     margin-bottom: .7em
@@ -34,6 +34,7 @@ body
       text-align: left
       background: white
       width: 13rem
+      height: 20em
 
       .info
         p
@@ -61,11 +62,14 @@ body
         padding: .05em 1em .05em 1em
         display: flex
         flex-direction: row
+        color: #666
         p
           padding: 0
           margin: 0
+
         .name
-          color: #666
+          color: black
+          font-weight: bolder
 
       .input
         display: flex
@@ -77,6 +81,7 @@ body
         border-bottom-left-radius: .3em
         border-bottom-right-radius: .3em
         background: #fdfdfd
+
         input
           height: 2.2em
 

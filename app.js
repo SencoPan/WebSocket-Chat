@@ -70,10 +70,13 @@ wsServer.on('request', function(request) {
                 text: message.utf8Data,
                 author: username
             };
-            console.log(`WS - There is those connections online ${connections.length}`);
+
             for (const client of connections) {
+                console.log(client.state);
+                console.log(client.closeDescription);
                 await client.sendUTF(JSON.stringify(json))
             }
+
         }
     });
 
@@ -81,8 +84,8 @@ wsServer.on('request', function(request) {
         if (username !== false) {
             console.log("WS - " + (Date().toString()) + " Peer "
                 + connection + " disconnected.");
-            connections.splice(index, 1);
         }
+        connections.splice(index, 1);
     });
 
     connection.on('error', async error => {

@@ -37,8 +37,7 @@ const addMessage = async (message) => {
 };
 
 const addUser = async user => {
-    console.log('User added', user
-    );
+    console.log('User added', user);
     const newUser = await createUser(user);
     userBlock.append(newUser);
 };
@@ -51,18 +50,25 @@ if (!window.WebSocket) {
     messageBox.innerHTML = '<p class="message"> Sorry, but your browser doesn\'t</p>';
     input.style.display = 'none';
 } else {
-    const connection = new WebSocket('ws://127.0.0.1:3000');
+    let connection = new WebSocket('ws://127.0.0.1:3000');
 
     connection.onopen = async () => {
+        console.log('hello')
+    };
 
     connection.onerror = async (error) => {
         console.error(error)
     };
 
+    connection.onclose = async () => {
+        console.log(connection);
+        connection = await new WebSocket('ws://127.0.0.1:3000');
+    };
+
     connection.onmessage = async (receivedMessage) => {
         const message =  JSON.parse(receivedMessage.data);
 
-        console.log(message)
+        console.log(message);
 
         message ? true : console.error('Bad message');
 
@@ -79,7 +85,7 @@ if (!window.WebSocket) {
         if (event.keyCode === 13 && inputAuth.value) {
             user = inputAuth.value;
 
-            connection.send(user);
+            await connection.send(user);
 
             authBlock.style.display = 'none';
             messageBlock.style.display = 'flex';
@@ -88,13 +94,9 @@ if (!window.WebSocket) {
 
     input.onkeypress = async event => {
         if (event.keyCode === 13 && inputAuth.value) {
-            connection.send(input.value);
+            await connection.send(input.value);
 
             input.value = '';
         }
     };
-
-    window.onbeforeunload = async () => {
-        connection.close();
-    }
-}}
+}
