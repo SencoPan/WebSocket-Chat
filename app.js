@@ -5,12 +5,6 @@ const WebSocket = require('websocket').server;
 
 const port = require('./config').server.port;
 
-const htmlEntities = async str => {
-    return String(str)
-        .replace(/&/g, '&amp;').replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-};
-
 let template;
 let connections = [];
 
@@ -55,10 +49,12 @@ wsServer.on('request', function(request) {
     const index = connections.push(connection) - 1;
 
     connection.on('message', async (message) => {
-        message.type === 'utf8' ? console.log(`WS - ${Date().toString()} - Got message - ${message.utf8Data}`) : console.log(`WS - ${Date().toString()} - Got bad message`);
+        message.type === 'utf8' ?
+            console.log(`WS - ${Date().toString()} - Got message - ${message.utf8Data}`) :
+            console.log(`WS - ${Date().toString()} - Got bad message`);
 
         if( username === false ) {
-            username = await htmlEntities(message.utf8Data);
+            username = message.utf8Data;
 
             connection.sendUTF( JSON.stringify({ type: 'test', data: username }));
 
@@ -72,7 +68,7 @@ wsServer.on('request', function(request) {
                 text: message.utf8Data,
                 author: username
             };
-
+            console.log(`There is those connections online ${connections.length}`);
             for (const client of connections) {
                 await client.sendUTF(JSON.stringify(json))
             }

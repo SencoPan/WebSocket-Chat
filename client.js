@@ -3,17 +3,30 @@ const inputAuth = document.getElementsByTagName('input')[0];
 const input = document.getElementsByTagName('input')[2];
 const authBlock = document.getElementsByClassName('auth')[0];
 const messageBlock = document.getElementsByClassName('message-sender')[0];
+const firstUser = document.body.querySelector('.first-user .info');
+const secondUser = document.body.querySelector('.second-user .info');
+
+console.log(firstUser);
+
+const createMessage = async (info) => {
+    const newMessage = document.createElement('div');
+
+    newMessage.className = 'message';
+
+    newMessage.insertAdjacentHTML('beforeend', `
+            <p class="name"> ${info.author} : &nbsp </p>
+            <p > ${info.text} </p>
+    `);
+
+    return newMessage;
+};
 
 const addMessage = async (message) => {
-    console.log('message added')
-    console.log(message)
-    const newMessage = `
-        <div class="message">
-            <p class="name"> ${message.author} </p>
-            <p > ${message.text} </p>
-        </div>
-    `;
-    messageBox.prepend(newMessage)
+    console.log('message added');
+
+    const newMessage = await createMessage(message);
+
+    messageBox.append(newMessage)
 };
 
 let user = false;
@@ -27,17 +40,18 @@ if (!window.WebSocket) {
     const connection = new WebSocket('ws://127.0.0.1:3000');
 
     connection.onopen = async () => {
-       alert('Opened')
-    };
+
+        if( firstUser.lastChild.nodeName === 'SPAN'  )
+            firstUser.innerHTML = '';
+        else if(firstUser.lastChild.nodeName === 'SPAN')
+            secondUser.innerHTML = '';
 
     connection.onerror = async (error) => {
-        alert('Error');
-        console.log(error)
+        console.error(error)
     };
 
     connection.onmessage = async (receivedMessage) => {
         const message =  JSON.parse(receivedMessage.data);
-        console.log(message)
 
         message ? true : console.error('Bad message');
 
@@ -49,7 +63,13 @@ if (!window.WebSocket) {
     inputAuth.onkeypress = async event => {
         if (event.keyCode === 13 && inputAuth.value) {
             user = inputAuth.value;
+
             connection.send(user);
+
+            firstUser.innerHTML === '' ?
+                firstUser.innerHTML = inputAuth.value :
+                secondUser.innerHTML = inputAuth.value;
+
             authBlock.style.display = 'none';
             messageBlock.style.display = 'flex';
         }
@@ -58,7 +78,14 @@ if (!window.WebSocket) {
     input.onkeypress = async event => {
         if (event.keyCode === 13 && inputAuth.value) {
             connection.send(input.value);
+
+
+
             input.value = '';
         }
     };
-}
+
+    window.onbeforeunload = async () => {
+        connection.close();
+    }
+}}
