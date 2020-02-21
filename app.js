@@ -60,7 +60,7 @@ wsServer.on('request', function(request) {
                 client.sendUTF( JSON.stringify({ type: 'name', data: username }));
             }
 
-            console.log((Date().toString()) + '- User is known as: ' + username);
+            console.log("WS -" + (Date().toString()) + '- User is known as: ' + username);
         } else {
             console.log(`WS - ${Date().toString()} - Received message from: ${username} : ${message.utf8Data}`);
 
@@ -70,7 +70,7 @@ wsServer.on('request', function(request) {
                 text: message.utf8Data,
                 author: username
             };
-            console.log(`There is those connections online ${connections.length}`);
+            console.log(`WS - There is those connections online ${connections.length}`);
             for (const client of connections) {
                 await client.sendUTF(JSON.stringify(json))
             }
@@ -79,8 +79,8 @@ wsServer.on('request', function(request) {
 
     connection.on('close', async (connection) => {
         if (username !== false) {
-            console.log((Date().toString()) + " Peer "
-                + connection.remoteAddress + " disconnected.");
+            console.log("WS - " + (Date().toString()) + " Peer "
+                + connection + " disconnected.");
             connections.splice(index, 1);
         }
     });

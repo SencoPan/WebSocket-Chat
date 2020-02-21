@@ -6,8 +6,6 @@ const messageBlock = document.getElementsByClassName('message-sender')[0];
 const firstUser = document.body.querySelector('.first-user .info');
 const secondUser = document.body.querySelector('.second-user .info');
 
-console.log(firstUser);
-
 const createMessage = async (info) => {
     const newMessage = document.createElement('div');
 
@@ -48,7 +46,7 @@ if (!window.WebSocket) {
 
     connection.onmessage = async (receivedMessage) => {
         const message =  JSON.parse(receivedMessage.data);
-        console.log(message);
+
         message ? true : console.error('Bad message');
 
         if (message.type === 'name') {
@@ -77,8 +75,6 @@ if (!window.WebSocket) {
     input.onkeypress = async event => {
         if (event.keyCode === 13 && inputAuth.value) {
             connection.send(input.value);
-
-
 
             input.value = '';
         }
