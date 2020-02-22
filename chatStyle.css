@@ -41,7 +41,7 @@ body {
   height: 20em;
 }
 .content .UI .user-heap .info p {
-  margin: 0.5em auto auto 0.5rem;
+  text-align: center;
 }
 .content .UI .user-heap .user {
   font-size: 0.8em;
