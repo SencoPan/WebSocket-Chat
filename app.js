@@ -60,8 +60,6 @@ wsServer.on('request', function(request) {
             username = message.utf8Data;
 
             for (let client of connections) {
-                console.log('check', client.state);
-                console.log(client);
                 client.sendUTF( JSON.stringify({ type: 'name', data: username }));
             }
 

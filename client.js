@@ -53,23 +53,19 @@ if (!window.WebSocket) {
     let connection = new WebSocket(HOST);
 
     connection.onopen = async () => {
-        console.log('hello')
+        console.log('User connected')
     };
 
     connection.onerror = async (error) => {
-        console.log('error', error);
         connection.close();
     };
 
     connection.onclose = async () => {
-        console.log(connection);
         connection.close();
     };
 
     connection.onmessage = async (receivedMessage) => {
         const message =  JSON.parse(receivedMessage.data);
-
-        console.log(message);
 
         message ? true : console.error('Bad message');
 
