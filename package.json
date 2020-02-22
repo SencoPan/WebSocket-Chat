@@ -1,14 +1,14 @@
 {
   "name": "websocket",
   "version": "1.0.0",
-  "description": "",
+  "description": "Chat application based on WebSockets",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "starty": "node app"
+    "start": "node app"
   },
   "keywords": [],
-  "author": "",
+  "author": "SencoPan",
   "license": "ISC",
   "dependencies": {
     "bufferutil": "^4.0.1",
