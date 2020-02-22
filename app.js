@@ -1,9 +1,10 @@
 const http = require('http');
 const pug = require('pug');
+const path = require('path');
 const fs = require('fs');
 const WebSocket = require('websocket').server;
 
-const port = require('./config').server.port;
+const port = process.env.PORT || require('./config').server.port;
 
 let template;
 let connections = [];
@@ -34,7 +35,7 @@ const server = http.createServer((req, res) => {
 });
 
 
-server.listen(3000, () => {
+server.listen(port, () => {
     console.log(`${Date().toString()} - Server is launched at localhost:${port}`)
 });
 
