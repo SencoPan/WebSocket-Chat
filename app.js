@@ -56,7 +56,7 @@ wsServer.on('request', function(request) {
             username = message.utf8Data;
 
             for (let client of connections) {
-                client.send( JSON.stringify({ type: 'name', data: username }));
+                client.sendUTF( JSON.stringify({ type: 'name', data: username }));
             }
 
             console.log("WS -" + (Date().toString()) + '- User is known as: ' + username);
@@ -71,7 +71,7 @@ wsServer.on('request', function(request) {
             };
 
             for (let client of connections) {
-                await client.send(JSON.stringify(json))
+                await client.sendUTF(JSON.stringify(json))
             }
         }
     });

@@ -57,20 +57,12 @@ if (!window.WebSocket) {
     };
 
     connection.onerror = async (error) => {
+        console.log('error', error);
         connection.close();
-        await setTimeout(async () => {
-            connection = new WebSocket('ws://127.0.0.1:3000');
-        }, 2000)
     };
 
     connection.onclose = async () => {
         console.log(connection);
-
-        connection.send({
-            type:'close',
-            message: 'Page is reloading.'
-        });
-
         connection.close();
     };
 
