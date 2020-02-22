@@ -47,6 +47,8 @@ wsServer.on('request', function(request) {
     let connection = request.accept(null, request.origin);
     let username = false;
 
+    connections.push(connection);
+
     connection.on('message', async (message) => {
         message.type === 'utf8' ?
             console.log(`WS - ${Date().toString()} - Got message - ${message.utf8Data}`) :
