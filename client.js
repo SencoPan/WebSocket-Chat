@@ -42,7 +42,6 @@ const addUser = async user => {
     userBlock.append(newUser);
 };
 
-let user = false;
 
 window.WebSocket = window.WebSocket || window.MozWebSocket;
 
@@ -50,6 +49,7 @@ if (!window.WebSocket) {
     messageBox.innerHTML = '<p class="message"> Sorry, but your browser doesn\'t</p>';
     input.style.display = 'none';
 } else {
+    let user = false;
     let connection = new WebSocket('ws://127.0.0.1:3000');
 
     connection.onopen = async () => {
@@ -57,7 +57,10 @@ if (!window.WebSocket) {
     };
 
     connection.onerror = async (error) => {
-        console.error(error)
+        connection.close();
+        await setTimeout(async () => {
+            connection = new WebSocket('ws://127.0.0.1:3000');
+        }, 2000)
     };
 
     connection.onclose = async () => {

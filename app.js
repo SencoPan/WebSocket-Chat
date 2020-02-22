@@ -46,18 +46,15 @@ wsServer.on('request', function(request) {
     let connection = request.accept(null, request.origin);
     let username = false;
 
-    const index = connections.push(connection) - 1;
-
     connection.on('message', async (message) => {
         message.type === 'utf8' ?
             console.log(`WS - ${Date().toString()} - Got message - ${message.utf8Data}`) :
             console.log(`WS - ${Date().toString()} - Got bad message`);
-        if (message.utf8Data.type === 'close'){
-            connection.close();
-        } else if( username === false ) {
+
+        if( username === false ) {
             username = message.utf8Data;
 
-            for (const client of connections) {
+            for (let client of connections) {
                 client.sendUTF( JSON.stringify({ type: 'name', data: username }));
             }
 
@@ -72,21 +69,22 @@ wsServer.on('request', function(request) {
                 author: username
             };
 
-            for (const client of connections) {
-                console.log(client.state);
-                console.log(client.closeDescription);
+            for (let client of connections) {
                 await client.sendUTF(JSON.stringify(json))
             }
-
         }
     });
 
     connection.on('close', async (connection) => {
+
         if (username !== false) {
             console.log("WS - " + (Date().toString()) + " Peer "
                 + connection + " disconnected.");
         }
-        connections.splice(index, 1);
+        connections.forEach( client => {
+            if(client.state === 'closed')
+                connections.splice(connections.indexOf(client), 1)
+        })
     });
 
     connection.on('error', async error => {
