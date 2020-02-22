@@ -1,0 +1,111 @@
+body {
+  background: #edeef0;
+  margin: 0;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  color: slategrey;
+  font-family: Bahnschrift, monospace;
+}
+.content .app-header {
+  margin-bottom: 0.9em;
+  background: #285473;
+}
+.content .app-header .app-name {
+  display: flex;
+  width: 50em;
+  margin: 0 auto 0 auto;
+  color: white;
+}
+.content .app-header .app-name h1 {
+  font-size: 1.8em;
+  margin: 0 auto 0 0.3em;
+}
+.content .UI {
+  display: flex;
+  width: 50em;
+  height: calc(100vh - 2.5em - 0.7em);
+  color: gainsboro;
+  margin: 0 auto 0 auto;
+}
+.content .UI .user-heap, .content .UI .message-box {
+  border-radius: 0.3em;
+}
+.content .UI .user-heap {
+  color: #285473;
+  text-align: left;
+  background: white;
+  width: 13rem;
+  height: 20em;
+}
+.content .UI .user-heap .info p {
+  margin: 0.5em auto auto 0.5rem;
+}
+.content .UI .user-heap .user {
+  font-size: 0.8em;
+  text-align: left;
+  margin-left: 0.5em;
+}
+.content .UI .user-heap hr {
+  background-color: #eee;
+  border: 0;
+  height: 0.1em;
+}
+.content .UI .message-box {
+  display: flex;
+  background: white;
+  width: 37rem;
+  flex-direction: column;
+  justify-content: end;
+  margin-left: 1em;
+}
+.content .UI .message-box .message {
+  padding: 0.05em 1em 0.05em 1em;
+  display: flex;
+  flex-direction: row;
+  color: #666;
+  margin-bottom: 0.5em;
+}
+.content .UI .message-box .message p {
+  padding: 0;
+  margin: 0;
+}
+.content .UI .message-box .message .name {
+  color: black;
+  font-weight: bolder;
+}
+.content .UI .message-box .input {
+  display: flex;
+  justify-content: center;
+  height: 2.5em;
+  border-top: darkgrey solid 0.02em;
+  border-bottom: darkgrey solid 0.02rem;
+  border-bottom-left-radius: 0.3em;
+  border-bottom-right-radius: 0.3em;
+  background: #fdfdfd;
+}
+.content .UI .message-box .input input {
+  height: 2.2em;
+}
+.content .UI .message-box .input input:not([type=submit]) {
+  width: 35em;
+  border: #91a9c1 solid 0.01em;
+  border-radius: 0.3em;
+  padding: 0.5em;
+  margin: auto;
+  margin-right: 0;
+}
+.content .UI .message-box .input input:not([type=text]) {
+  border-radius: 0.3em;
+  width: 5em;
+  background: whitesmoke;
+  border: #91a9c1 solid 0.05em;
+  color: slategrey;
+  cursor: pointer;
+  margin: auto;
+  margin-left: 0.5em;
+}
+
+/*# sourceMappingURL=chatStyle.css.map */
