@@ -12,6 +12,8 @@ let connections = [];
 const server = http.createServer((req, res) => {
     console.log(`GET - ${Date().toString()} - ${req.url}`);
     if(req.url === '/'){
+        res.writeHeader(200, {'Content-type':'text/html'});
+
         template = pug.compileFile('./webSocket.pug');
 
         res.end(template());
