@@ -36,21 +36,22 @@ body
     color: gainsboro
     margin: 0 auto 0 auto
 
-    .user-heap, .message-box
+    .user-heap, .message-box, .log-user
       border-radius: .3em
 
-    .user-heap
+    .user-heap, .log-user
       color: #285473
       text-align: left
       background: white
       width: 13rem
       height: 20em
       overflow-y: auto
+
       .info
         p
           text-align: center
 
-      .user
+      .user, .log
         font-size: .8em
         text-align: left
         margin-left: .5em
@@ -60,6 +61,10 @@ body
         border: 0
         height: .1em
 
+    .log-user
+      margin-top: 1em
+      height: calc(100vh - 20em - 25em)
+
     .message-box
       display: flex
       background: white
@@ -68,9 +73,11 @@ body
       justify-content: end
       -webkit-justify-content: flex-end
       margin-left: 1em
+
       .messages
         word-wrap: break-word
         overflow-y: auto
+
       .message
         padding: .05em 1em .05em 1em
         display: flex

@@ -34,10 +34,10 @@ body {
   color: gainsboro;
   margin: 0 auto 0 auto;
 }
-.content .UI .user-heap, .content .UI .message-box {
+.content .UI .user-heap, .content .UI .message-box, .content .UI .log-user {
   border-radius: 0.3em;
 }
-.content .UI .user-heap {
+.content .UI .user-heap, .content .UI .log-user {
   color: #285473;
   text-align: left;
   background: white;
@@ -45,18 +45,22 @@ body {
   height: 20em;
   overflow-y: auto;
 }
-.content .UI .user-heap .info p {
+.content .UI .user-heap .info p, .content .UI .log-user .info p {
   text-align: center;
 }
-.content .UI .user-heap .user {
+.content .UI .user-heap .user, .content .UI .user-heap .log, .content .UI .log-user .user, .content .UI .log-user .log {
   font-size: 0.8em;
   text-align: left;
   margin-left: 0.5em;
 }
-.content .UI .user-heap hr {
+.content .UI .user-heap hr, .content .UI .log-user hr {
   background-color: #eee;
   border: 0;
   height: 0.1em;
+}
+.content .UI .log-user {
+  margin-top: 1em;
+  height: calc(100vh - 20em - 25em);
 }
 .content .UI .message-box {
   display: flex;

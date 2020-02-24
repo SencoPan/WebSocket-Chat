@@ -8,6 +8,7 @@ const port = process.env.PORT || require('./config').server.port;
 
 let template;
 let connections = [];
+let names = [];
 
 const server = http.createServer(async (req, res) => {
     console.log(`GET - ${Date().toString()} - ${req.url}`);
@@ -57,12 +58,19 @@ wsServer.on('request', function(request) {
         message.type === 'utf8' ?
             console.log(`WS - ${Date().toString()} - Got message - ${message.utf8Data}`) :
             console.log(`WS - ${Date().toString()} - Got bad message`);
-
-        if( username === false ) {
+        if (JSON.parse(message.utf8Data).type === 'disconnect'){
+            names.splice(names.indexOf(JSON.parse(message.utf8Data).data), 1);
+            for (let client of connections) {
+                client.sendUTF( JSON.stringify({ type: 'name', data: names }));
+            }
+        }
+        else if( username === false ) {
             username = message.utf8Data;
 
+            names.push(username);
+
             for (let client of connections) {
-                client.sendUTF( JSON.stringify({ type: 'name', data: username }));
+                client.sendUTF( JSON.stringify({ type: 'name', data: names }));
             }
 
             console.log("WS -" + (Date().toString()) + '- User is known as: ' + username);

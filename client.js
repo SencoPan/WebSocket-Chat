@@ -4,6 +4,9 @@ const input = document.getElementsByTagName('input')[2];
 const authBlock = document.getElementsByClassName('auth')[0];
 const messageBlock = document.getElementsByClassName('message-sender')[0];
 const userBlock = document.getElementsByClassName('user-heap')[0];
+const logBlock = document.getElementsByClassName('log-user')[0];
+
+let names = [];
 
 const createUser = async (info) => {
     const newUser = document.createElement('div');
@@ -51,13 +54,25 @@ const addUser = async user => {
     userBlock.append(newUser);
 };
 
+const addLog = async (user, logType) => {
+    const newUser = await createUser(user);
+
+    newUser.style.color = logType;
+    newUser.className = 'log';
+
+    logBlock.append(newUser);
+    setTimeout(() => {
+        newUser.style.display = 'none'
+    }, 5000)
+};
+
 const HOST = location.origin.replace(/^http/, 'ws');
+
 window.WebSocket = window.WebSocket || window.MozWebSocket;
 
 if (!window.WebSocket) {
     messageBox.innerHTML = '<p class="message"> Sorry, but your browser doesn\'t</p>';
     input.style.display = 'none';
-
 } else {
     let user = false;
     let connection = new WebSocket(HOST);
@@ -71,7 +86,7 @@ if (!window.WebSocket) {
     };
 
     connection.onclose = async () => {
-        console.log('User disconnected')
+        console.log('User disconnected');
     };
 
     connection.onmessage = async (receivedMessage) => {
@@ -80,7 +95,36 @@ if (!window.WebSocket) {
         message ? true : console.error('Bad message');
 
         if (message.type === 'name') {
-            await addUser(message.data)
+            const initialUsers = document.getElementsByClassName('user');
+
+            for (const user of initialUsers){
+                if( message.data.indexOf(user.children[0].innerHTML) === -1){
+                    names.splice(names.indexOf(user.children[0].innerHTML), 1)
+                    userBlock.parentNode.removeChild(user)
+                }
+            }
+
+            for (const name of message.data) {
+                if(names.indexOf(name) === -1){
+                    names.push(name);
+                    await addUser(name)
+                }
+            }
+
+            /* for (const user of initialUsers){
+                 if( message.data.indexOf(Array.from(initialUsers)[i].children[0].innerHTML) !== -1){
+                     userBlock.parentNode.removeChild(initialUsers[i])
+                 }
+             }
+
+             for (const name of message.data){
+
+             }
+             for (const user of Array.from(initialUsers)) {
+                 if(message.data.indexOf(user.children[0].innerHTML) === -1) {
+                     await addUser(message.data)
+                 }
+             }*/
         }
 
         if(message.type === 'message'){
@@ -90,8 +134,10 @@ if (!window.WebSocket) {
 
     inputAuth.onkeypress = async event => {
         if (event.keyCode === 13 && inputAuth.value) {
-            if (inputAuth.value.length > 15)
+            if (inputAuth.value.length > 15){
                 inputAuth.setCustomValidity('Слишком большое имя.');
+                await addLog('Слишком большое имя.', 'red');
+            }
             else {
                 user = inputAuth.value;
 
@@ -110,4 +156,7 @@ if (!window.WebSocket) {
             input.value = '';
         }
     };
+    window.onunload = async event => {
+        connection.send(JSON.stringify({type: 'disconnect', data: user}))
+    }
 }
