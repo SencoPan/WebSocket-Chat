@@ -21,10 +21,18 @@ body
         font-size: 1.8em
         margin: 0 auto 0 .3em
 
+  .info-block
+    display: flex
+    flex-direction: column
+  //.log-user
+  //  display: flex
+  //  justify-content: flex-end
+  //  width: 15em
+  //  margin-left: auto
   .UI
     display: flex
     width: 50em
-    height: calc(100vh - 2.5em - 0.7em)
+    height: calc(100vh - 2.5em - 0.7em - 1em)
     color: gainsboro
     margin: 0 auto 0 auto
 
@@ -37,7 +45,7 @@ body
       background: white
       width: 13rem
       height: 20em
-
+      overflow-y: auto
       .info
         p
           text-align: center
@@ -60,6 +68,9 @@ body
       justify-content: end
       -webkit-justify-content: flex-end
       margin-left: 1em
+      .messages
+        word-wrap: break-word
+        overflow-y: auto
       .message
         padding: .05em 1em .05em 1em
         display: flex
@@ -67,17 +78,28 @@ body
         color: #666
         margin-bottom: .5em
         p
+          overflow-wrap: break-word
+          word-wrap: break-word
+          word-break: normal
+          line-break: strict
+          hyphens: none
+          -webkit-hyphens: none
+          -moz-hyphens: none
           padding: 0
           margin: 0
+          &:not(.name)
+            margin-left: .3em
 
         .name
+          min-width: 6.3em
+          max-height: 2em
           color: black
           font-weight: bolder
 
       .input
         display: flex
         justify-content: center
-        height: 2.5em
+        min-height: 2.5em
         border-top: darkgrey solid .02em
         border-bottom: darkgrey solid .02rem
 

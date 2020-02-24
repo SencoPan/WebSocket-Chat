@@ -7,12 +7,15 @@ const userBlock = document.getElementsByClassName('user-heap')[0];
 
 const createUser = async (info) => {
     const newUser = document.createElement('div');
+    const name = document.createTextNode(`${info}`);
 
     newUser.className = 'user';
 
     newUser.insertAdjacentHTML('beforeend', `
-            <p > ${info} </p>
+            <p> </p>
     `);
+
+    newUser.children[0].appendChild(name);
 
     return newUser;
 };
@@ -20,12 +23,18 @@ const createUser = async (info) => {
 const createMessage = async (info) => {
     const newMessage = document.createElement('div');
 
+    const name = document.createTextNode(`${info.author}:`);
+    const text = document.createTextNode(`${info.text}`);
+
     newMessage.className = 'message';
 
     newMessage.insertAdjacentHTML('beforeend', `
-            <p class="name"> ${info.author} : &nbsp </p>
-            <p > ${info.text} </p>
+            <p class="name"> </p>
+            <p ></p>
     `);
+
+    newMessage.children[0].appendChild(name);
+    newMessage.children[1].appendChild(text);
 
     return newMessage;
 };
@@ -48,6 +57,7 @@ window.WebSocket = window.WebSocket || window.MozWebSocket;
 if (!window.WebSocket) {
     messageBox.innerHTML = '<p class="message"> Sorry, but your browser doesn\'t</p>';
     input.style.display = 'none';
+
 } else {
     let user = false;
     let connection = new WebSocket(HOST);
@@ -61,7 +71,7 @@ if (!window.WebSocket) {
     };
 
     connection.onclose = async () => {
-        connection.close();
+        console.log('User disconnected')
     };
 
     connection.onmessage = async (receivedMessage) => {
@@ -80,17 +90,21 @@ if (!window.WebSocket) {
 
     inputAuth.onkeypress = async event => {
         if (event.keyCode === 13 && inputAuth.value) {
-            user = inputAuth.value;
+            if (inputAuth.value.length > 15)
+                inputAuth.setCustomValidity('Слишком большое имя.');
+            else {
+                user = inputAuth.value;
 
-            await connection.send(user);
+                await connection.send(user);
 
-            authBlock.style.display = 'none';
-            messageBlock.style.display = 'flex';
+                authBlock.style.display = 'none';
+                messageBlock.style.display = 'flex';
+            }
         }
     };
 
     input.onkeypress = async event => {
-        if (event.keyCode === 13 && inputAuth.value) {
+        if (event.keyCode === 13 && input.value) {
             await connection.send(input.value);
 
             input.value = '';

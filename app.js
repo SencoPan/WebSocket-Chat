@@ -9,7 +9,7 @@ const port = process.env.PORT || require('./config').server.port;
 let template;
 let connections = [];
 
-const server = http.createServer((req, res) => {
+const server = http.createServer(async (req, res) => {
     console.log(`GET - ${Date().toString()} - ${req.url}`);
     if(req.url === '/'){
         res.writeHeader(200, {'Content-type':'text/html'});
@@ -33,6 +33,8 @@ const server = http.createServer((req, res) => {
 
             await res.end(file);
         });
+    } else{
+        res.end()
     }
 });
 
