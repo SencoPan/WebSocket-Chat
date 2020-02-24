@@ -43,7 +43,8 @@ const createMessage = async (info) => {
 const addMessage = async (message) => {
     console.log('message added');
     const newMessage = await createMessage(message);
-    messageBox.append(newMessage)
+    messageBox.append(newMessage);
+    messageBox.scrollTop = messageBox.scrollHeight;
 };
 
 const addUser = async user => {
