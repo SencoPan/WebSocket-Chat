@@ -61,7 +61,7 @@ wsServer.on('request', function(request) {
 
         let data = {};
 
-        message instanceof Object ?
+        message.utf8Data instanceof Object ?
             data = JSON.parse(message.utf8Data) :
             data.type = false;
 
