@@ -9,9 +9,23 @@ body {
   color: slategrey;
   font-family: Bahnschrift, monospace;
 }
+.content .useless-stuff {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  max-height: 1em;
+}
+.content .useless-stuff p {
+  margin: 0 !important;
+}
+.content .useless-stuff a {
+  text-align: center;
+  margin-bottom: 0.2em;
+}
 .content .app-header {
   margin-bottom: 0.9em;
   background: #285473;
+  flex-direction: row;
 }
 .content .app-header .app-name {
   display: flex;
