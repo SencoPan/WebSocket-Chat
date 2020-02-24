@@ -3,10 +3,8 @@ const inputAuth = document.getElementsByTagName('input')[0];
 const input = document.getElementsByTagName('input')[2];
 const authBlock = document.getElementsByClassName('auth')[0];
 const messageBlock = document.getElementsByClassName('message-sender')[0];
-const userBlock = document.getElementsByClassName('user-heap')[0];
+const userBlock = document.getElementsByClassName('users')[0];
 const logBlock = document.getElementsByClassName('log-user')[0];
-
-let names = [];
 
 const createUser = async (info) => {
     const newUser = document.createElement('div');
@@ -75,6 +73,7 @@ if (!window.WebSocket) {
     input.style.display = 'none';
 } else {
     let user = false;
+    let names = [];
     let connection = new WebSocket(HOST);
 
     connection.onopen = async () => {
@@ -87,20 +86,23 @@ if (!window.WebSocket) {
 
     connection.onclose = async () => {
         console.log('User disconnected');
+
     };
 
     connection.onmessage = async (receivedMessage) => {
         const message =  JSON.parse(receivedMessage.data);
-
+        let test = [];
         message ? true : console.error('Bad message');
 
         if (message.type === 'name') {
             const initialUsers = document.getElementsByClassName('user');
 
             for (const user of initialUsers){
-                if( message.data.indexOf(user.children[0].innerHTML) === -1){
-                    names.splice(names.indexOf(user.children[0].innerHTML), 1)
-                    userBlock.parentNode.removeChild(user)
+                if( message.data.indexOf(user.children[0].innerText) === -1){
+                    names.splice(names.indexOf(user.children[0].innerHTML.substr(1)), 1)
+                    userBlock.removeChild(user)
+                } else if(names.indexOf(user.children[0].innerText) === -1){
+                    names.push(name);
                 }
             }
 
@@ -139,7 +141,7 @@ if (!window.WebSocket) {
                 await addLog('Слишком большое имя.', 'red');
             }
             else {
-                user = inputAuth.value;
+                user = inputAuth.value.toString();
 
                 await connection.send(user);
 
@@ -151,7 +153,7 @@ if (!window.WebSocket) {
 
     input.onkeypress = async event => {
         if (event.keyCode === 13 && input.value) {
-            await connection.send(input.value);
+            await connection.send(input.value.toString());
 
             input.value = '';
         }

@@ -58,8 +58,16 @@ wsServer.on('request', function(request) {
         message.type === 'utf8' ?
             console.log(`WS - ${Date().toString()} - Got message - ${message.utf8Data}`) :
             console.log(`WS - ${Date().toString()} - Got bad message`);
-        if (JSON.parse(message.utf8Data).type === 'disconnect'){
-            names.splice(names.indexOf(JSON.parse(message.utf8Data).data), 1);
+
+        let data = {};
+
+        message instanceof Object ?
+            data = JSON.parse(message.utf8Data) :
+            data.type = false;
+
+        if (data.type === 'disconnect'){
+            names.splice(names.indexOf(data.data), 1);
+
             for (let client of connections) {
                 client.sendUTF( JSON.stringify({ type: 'name', data: names }));
             }
@@ -76,7 +84,7 @@ wsServer.on('request', function(request) {
             console.log("WS -" + (Date().toString()) + '- User is known as: ' + username);
         } else {
             console.log(`WS - ${Date().toString()} - Received message from: ${username} : ${message.utf8Data}`);
-
+            console.log(names);
             const json = {
                 type: 'message',
                 time: Date().toString(),

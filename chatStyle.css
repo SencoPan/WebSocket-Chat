@@ -95,9 +95,9 @@ body {
 }
 .content .UI .message-box .message p:not(.name) {
   margin-left: 0.3em;
+  max-width: 30em;
 }
 .content .UI .message-box .message .name {
-  min-width: 6.3em;
   max-height: 2em;
   color: black;
   font-weight: bolder;
