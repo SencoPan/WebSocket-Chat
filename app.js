@@ -61,9 +61,11 @@ wsServer.on('request', function(request) {
 
         let data = {};
 
-        message.utf8Data instanceof Object ?
-            data = JSON.parse(message.utf8Data) :
+        try{
+            data = JSON.parse(message.utf8Data)
+        }catch (e) {
             data.type = false;
+        }
 
         if (data.type === 'disconnect'){
             names.splice(names.indexOf(data.data), 1);
