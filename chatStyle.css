@@ -51,7 +51,7 @@ body {
 .content .UI .user-heap .user, .content .UI .user-heap .log, .content .UI .log-user .user, .content .UI .log-user .log {
   font-size: 0.8em;
   text-align: left;
-  margin-left: 0.5em;
+  margin-left: 1em;
 }
 .content .UI .user-heap hr, .content .UI .log-user hr {
   background-color: #eee;
@@ -83,6 +83,7 @@ body {
   margin-bottom: 0.5em;
 }
 .content .UI .message-box .message p {
+  font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, "Noto Sans Armenian", "Noto Sans Bengali", "Noto Sans Cherokee", "Noto Sans Devanagari", "Noto Sans Ethiopic", "Noto Sans Georgian", "Noto Sans Hebrew", "Noto Sans Kannada", "Noto Sans Khmer", "Noto Sans Lao", "Noto Sans Osmanya", "Noto Sans Tamil", "Noto Sans Telugu", "Noto Sans Thai", sans-serif;
   overflow-wrap: break-word;
   word-wrap: break-word;
   word-break: normal;
@@ -92,14 +93,16 @@ body {
   -moz-hyphens: none;
   padding: 0;
   margin: 0;
+  font-weight: 400;
 }
 .content .UI .message-box .message p:not(.name) {
   margin-left: 0.3em;
   max-width: 30em;
+  color: #8a8a8a;
 }
 .content .UI .message-box .message .name {
   max-height: 2em;
-  color: black;
+  color: #285473;
   font-weight: bolder;
 }
 .content .UI .message-box .input {
