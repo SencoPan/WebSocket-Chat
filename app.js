@@ -1,17 +1,19 @@
 const http = require('http');
 const pug = require('pug');
-const path = require('path');
 const fs = require('fs');
 const WebSocket = require('websocket').server;
 
-const port = process.env.PORT || require('./config').server.port;
+const imgOptions = require('./configs/config').server.imagesUpload;
+const port = process.env.PORT || require('./configs/config').server.port;
 
 let template;
 let connections = [];
 let names = [];
 
 const server = http.createServer(async (req, res) => {
-    console.log(`GET - ${Date().toString()} - ${req.url}`);
+    //const imageReqHandling = http.request(imgOptions);
+    console.log(`${req.method} - ${Date().toString()} - ${req.url}`);
+
     if(req.url === '/'){
         res.writeHeader(200, {'Content-type':'text/html'});
 
@@ -69,6 +71,8 @@ wsServer.on('request', function(request) {
 
         if (data.type === 'disconnect'){
             names.splice(names.indexOf(data.data), 1);
+
+            username = false;
 
             for (let client of connections) {
                 client.sendUTF( JSON.stringify({ type: 'name', data: names }));

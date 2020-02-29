@@ -1,15 +1,15 @@
 const messageBox = document.getElementsByClassName('messages')[0];
 const inputAuth = document.getElementsByTagName('input')[0];
 const input = document.getElementsByTagName('input')[2];
-const fileinput = document.getElementsByTagName('input')[3];
+const fileinput = document.getElementsByTagName('input')[4];
+const submitButton = document.getElementsByTagName('input')[1];
 const authBlock = document.getElementsByClassName('auth')[0];
 const messageBlock = document.getElementsByClassName('message-sender')[0];
 const userBlock = document.getElementsByClassName('users')[0];
 const logBlock = document.getElementsByClassName('log-user')[0];
 const icon = document.getElementsByTagName('i')[0];
 
-console.log(fileinput);
-console.log(icon);
+console.log(document.getElementsByTagName('input'));
 
 const createUser = async (info) => {
     const newUser = document.createElement('div');
@@ -155,7 +155,7 @@ if (!window.WebSocket) {
         }
     };
 
-    icon.onkeypress = async event => {
+    icon.onclick = async event => {
         console.log(fileinput);
         fileinput.click()
     };
