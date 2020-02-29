@@ -181,7 +181,6 @@ if (!window.WebSocket) {
 
         reader.onloadend = async () => {
             connection.send(JSON.stringify({type: 'image', data: reader.result}));
-            //console.log(JSON.parse(JSON.stringify(reader.result)))
         }
     };
 

@@ -10,12 +10,8 @@ let connections = [];
 let names = [];
 
 const server = http.createServer(async (req, res) => {
-    //const imageReqHandling = http.request(imgOptions);
     console.log(`${req.method} - ${Date().toString()} - ${req.url}`);
-    if(req.method === 'POST' && req.url === '/'){
-        console.dir(req.file)
-    }
-    else if(req.url === '/'){
+    if(req.url === '/'){
         res.writeHeader(200, {'Content-type':'text/html'});
 
         template = pug.compileFile('./webSocket.pug');
