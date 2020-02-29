@@ -62,15 +62,10 @@ body
           text-align: center
 
       .user, .log
-        display: flex
-        flex-direction: row
         font-size: .8em
         text-align: left
         margin-left: 1em
-        p
-          margin: 0
-        i
-          margin-right: .3em
+
 
       hr
         background-color: #eee
@@ -93,12 +88,11 @@ body
       .messages
         word-wrap: break-word
         overflow-y: auto
-      img
-        max-width: 33em
+
       .message
         padding: .05em 1em .05em 1em
         display: flex
-        flex-direction: column
+        flex-direction: row
         color: #666
         margin-bottom: .5em
         p
@@ -115,6 +109,7 @@ body
           font-weight: 400
 
           &:not(.name)
+            margin-left: .3em
             max-width: 30em
             color: #8a8a8a
 
@@ -127,23 +122,17 @@ body
         display: flex
         justify-content: center
         min-height: 2.5em
-        max-height: 2.5em
         border-top: darkgrey solid .02em
         border-bottom: darkgrey solid .02rem
 
         border-bottom-left-radius: .3em
         border-bottom-right-radius: .3em
         background: #fdfdfd
-        i
-          display: flex
-          font-size: 1.3em
-          padding: .5em
-          color: silver
 
         input
           height: 2.2em
 
-          &[type="text"]
+          &:not([type="submit"])
             width: 35em
             border: #91a9c1 solid .01em
             border-radius: .3em
@@ -151,7 +140,7 @@ body
             margin: auto
             margin-right: 0
 
-          &[type="submit"]
+          &:not([type="text"])
             border-radius: .3em
             width: 5em
             background: whitesmoke
@@ -160,7 +149,3 @@ body
             cursor: pointer
             margin: auto
             margin-left: .5em
-            margin-right: .3em
-
-          &[type='file']
-            display: none
