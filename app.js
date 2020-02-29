@@ -13,8 +13,10 @@ let names = [];
 const server = http.createServer(async (req, res) => {
     //const imageReqHandling = http.request(imgOptions);
     console.log(`${req.method} - ${Date().toString()} - ${req.url}`);
-
-    if(req.url === '/'){
+    if(req.method === 'POST' && req.url === '/'){
+        console.dir(req.file)
+    }
+    else if(req.url === '/'){
         res.writeHeader(200, {'Content-type':'text/html'});
 
         template = pug.compileFile('./webSocket.pug');
@@ -46,7 +48,11 @@ server.listen(port, () => {
     console.log(`${Date().toString()} - Server is launched at localhost:${port}`)
 });
 
-const wsServer = new WebSocket({ httpServer: server });
+const wsServer = new WebSocket({
+    httpServer: server,
+    maxReceivedFrameSize: 30 * 1024 * 1024,
+    maxReceivedMessageSize: 10 * 1024 * 1024
+});
 
 wsServer.on('request', function(request) {
     console.log(`WS - ${Date().toString()} - Request from origin: ${request.origin}`);
@@ -58,7 +64,7 @@ wsServer.on('request', function(request) {
 
     connection.on('message', async (message) => {
         message.type === 'utf8' ?
-            console.log(`WS - ${Date().toString()} - Got message - ${message.utf8Data}`) :
+            console.log(`WS - ${Date().toString()} - Got message - type - ${message.type}`) :
             console.log(`WS - ${Date().toString()} - Got bad message`);
 
         let data = {};
@@ -69,7 +75,12 @@ wsServer.on('request', function(request) {
             data.type = false;
         }
 
-        if (data.type === 'disconnect'){
+        if(data.type === 'image'){
+            for (let client of connections) {
+                client.sendUTF( JSON.stringify({ type: 'image', data: data.data, author: username}));
+            }
+        }
+        else if (data.type === 'disconnect'){
             names.splice(names.indexOf(data.data), 1);
 
             username = false;
@@ -90,7 +101,7 @@ wsServer.on('request', function(request) {
             console.log("WS -" + (Date().toString()) + '- User is known as: ' + username);
         } else {
             console.log(`WS - ${Date().toString()} - Received message from: ${username} : ${message.utf8Data}`);
-            console.log(names);
+
             const json = {
                 type: 'message',
                 time: Date().toString(),

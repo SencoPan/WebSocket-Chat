@@ -28,6 +28,8 @@ body
                         hr
             .message-box
                 .messages
+                    .message
+                        img(id='test')
                 .input.auth
                     input(type='text' placeholder='Введите свое имя')
                     input(type='submit' value='Send')
@@ -35,7 +37,7 @@ body
                     i.fas.fa-thumbtack
                     input(type='text' placeholder='Введите сообщение')
                     input(type='submit' value='Send')
-                    input(type='file' accept=".png, .jpg, .jpeg")
+                    input(type='file' accept=".png, .jpg, .jpeg" multiple)
 
 block scripts
 script(src='./client.js')

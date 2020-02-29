@@ -9,6 +9,8 @@ const userBlock = document.getElementsByClassName('users')[0];
 const logBlock = document.getElementsByClassName('log-user')[0];
 const icon = document.getElementsByTagName('i')[0];
 
+const reader = new FileReader();
+
 console.log(document.getElementsByTagName('input'));
 
 const createUser = async (info) => {
@@ -30,25 +32,38 @@ const createUser = async (info) => {
 const createMessage = async (info) => {
     const newMessage = document.createElement('div');
 
-    const name = document.createTextNode(`${info.author}:`);
-    const text = document.createTextNode(`${info.text}`);
-
-    newMessage.className = 'message';
+    const name = document.createTextNode(`${info.author}`);
 
     newMessage.insertAdjacentHTML('beforeend', `
-            <p class="name"> </p>
-            <p ></p>
+            <p class="name"></p>
+            <p></p>
     `);
 
     newMessage.children[0].appendChild(name);
-    newMessage.children[1].appendChild(text);
 
     return newMessage;
 };
 
+const addImage = async (imageInfo) => {
+    const newImage = await createMessage(imageInfo);
+    const image = document.createElement('img');
+
+    image.src = imageInfo.data;
+
+    newImage.children[1].appendChild(image);
+    newImage.className = 'message';
+    messageBox.append(newImage);
+    messageBox.scrollTop = messageBox.scrollHeight;
+};
+
 const addMessage = async (message) => {
     console.log('message added');
+    const text = document.createTextNode(`${message.text}`);
     const newMessage = await createMessage(message);
+
+    newMessage.className = 'message';
+    newMessage.children[1].appendChild(text);
+
     messageBox.append(newMessage);
     messageBox.scrollTop = messageBox.scrollHeight;
 };
@@ -92,12 +107,12 @@ if (!window.WebSocket) {
     };
 
     connection.onerror = async (error) => {
+        console.dir(error);
         connection.close();
     };
 
-    connection.onclose = async () => {
+    connection.onclose = async (data) => {
         console.log('User disconnected');
-
     };
 
     connection.onmessage = async (receivedMessage) => {
@@ -124,7 +139,9 @@ if (!window.WebSocket) {
                 }
             }
         }
-
+        if(message.type === 'image'){
+            await addImage(message);
+        }
         if(message.type === 'message'){
             await addMessage(message)
         }
@@ -156,8 +173,16 @@ if (!window.WebSocket) {
     };
 
     icon.onclick = async event => {
-        console.log(fileinput);
         fileinput.click()
+    };
+
+    fileinput.onchange = async event => {
+        await reader.readAsDataURL(fileinput.files[0]);
+
+        reader.onloadend = async () => {
+            connection.send(JSON.stringify({type: 'image', data: reader.result}));
+            //console.log(JSON.parse(JSON.stringify(reader.result)))
+        }
     };
 
     window.onbeforeunload = async () => {

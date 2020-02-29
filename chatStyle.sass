@@ -93,11 +93,12 @@ body
       .messages
         word-wrap: break-word
         overflow-y: auto
-
+      img
+        max-width: 33em
       .message
         padding: .05em 1em .05em 1em
         display: flex
-        flex-direction: row
+        flex-direction: column
         color: #666
         margin-bottom: .5em
         p
@@ -114,7 +115,6 @@ body
           font-weight: 400
 
           &:not(.name)
-            margin-left: .3em
             max-width: 30em
             color: #8a8a8a
 

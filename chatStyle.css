@@ -97,10 +97,13 @@ body {
   word-wrap: break-word;
   overflow-y: auto;
 }
+.content .UI .message-box img {
+  max-width: 33em;
+}
 .content .UI .message-box .message {
   padding: 0.05em 1em 0.05em 1em;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   color: #666;
   margin-bottom: 0.5em;
 }
@@ -118,7 +121,6 @@ body {
   font-weight: 400;
 }
 .content .UI .message-box .message p:not(.name) {
-  margin-left: 0.3em;
   max-width: 30em;
   color: #8a8a8a;
 }
