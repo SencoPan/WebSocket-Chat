@@ -3,8 +3,8 @@ const pug = require('pug');
 const fs = require('fs');
 const WebSocket = require('websocket').server;
 
-const imgOptions = require('./configs/config').server.imagesUpload;
-const port = process.env.PORT || require('./configs/config').server.port;
+const imgOptions = require('./config').server.imagesUpload;
+const port = process.env.PORT || require('./config').server.port;
 
 let template;
 let connections = [];
