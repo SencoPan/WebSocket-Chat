@@ -1,10 +1,15 @@
 const messageBox = document.getElementsByClassName('messages')[0];
 const inputAuth = document.getElementsByTagName('input')[0];
 const input = document.getElementsByTagName('input')[2];
+const fileinput = document.getElementsByTagName('input')[3];
 const authBlock = document.getElementsByClassName('auth')[0];
 const messageBlock = document.getElementsByClassName('message-sender')[0];
 const userBlock = document.getElementsByClassName('users')[0];
 const logBlock = document.getElementsByClassName('log-user')[0];
+const icon = document.getElementsByTagName('i')[0];
+
+console.log(fileinput);
+console.log(icon);
 
 const createUser = async (info) => {
     const newUser = document.createElement('div');
@@ -13,10 +18,11 @@ const createUser = async (info) => {
     newUser.className = 'user';
 
     newUser.insertAdjacentHTML('beforeend', `
+            <i class="far fa-user"></i>
             <p> </p>
     `);
 
-    newUser.children[0].appendChild(name);
+    newUser.children[1].appendChild(name);
 
     return newUser;
 };
@@ -65,6 +71,10 @@ const addLog = async (user, logType) => {
     }, 5000)
 };
 
+const removeUser = async (user, connection) => {
+    connection.send(JSON.stringify({type: 'disconnect', data: user}))
+};
+
 const HOST = location.origin.replace(/^http/, 'ws');
 
 window.WebSocket = window.WebSocket || window.MozWebSocket;
@@ -92,7 +102,7 @@ if (!window.WebSocket) {
 
     connection.onmessage = async (receivedMessage) => {
         const message =  JSON.parse(receivedMessage.data);
-        let test = [];
+
         message ? true : console.error('Bad message');
 
         if (message.type === 'name') {
@@ -113,21 +123,6 @@ if (!window.WebSocket) {
                     await addUser(name)
                 }
             }
-
-            /* for (const user of initialUsers){
-                 if( message.data.indexOf(Array.from(initialUsers)[i].children[0].innerHTML) !== -1){
-                     userBlock.parentNode.removeChild(initialUsers[i])
-                 }
-             }
-
-             for (const name of message.data){
-
-             }
-             for (const user of Array.from(initialUsers)) {
-                 if(message.data.indexOf(user.children[0].innerHTML) === -1) {
-                     await addUser(message.data)
-                 }
-             }*/
         }
 
         if(message.type === 'message'){
@@ -159,7 +154,16 @@ if (!window.WebSocket) {
             input.value = '';
         }
     };
-    window.onunload = async event => {
-        connection.send(JSON.stringify({type: 'disconnect', data: user}))
-    }
+
+    icon.onkeypress = async event => {
+        console.log(fileinput);
+        fileinput.click()
+    };
+
+    window.onbeforeunload = async () => {
+        await removeUser(user, connection);
+    };
+    window.onunload = async () =>  {
+        await removeUser(user, connection);
+    };
 }

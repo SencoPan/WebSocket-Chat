@@ -62,10 +62,15 @@ body
           text-align: center
 
       .user, .log
+        display: flex
+        flex-direction: row
         font-size: .8em
         text-align: left
         margin-left: 1em
-
+        p
+          margin: 0
+        i
+          margin-right: .3em
 
       hr
         background-color: #eee
@@ -128,11 +133,16 @@ body
         border-bottom-left-radius: .3em
         border-bottom-right-radius: .3em
         background: #fdfdfd
+        i
+          display: flex
+          font-size: 1.3em
+          padding: .5em
+          color: silver
 
         input
           height: 2.2em
 
-          &:not([type="submit"])
+          &[type="text"]
             width: 35em
             border: #91a9c1 solid .01em
             border-radius: .3em
@@ -140,7 +150,7 @@ body
             margin: auto
             margin-right: 0
 
-          &:not([type="text"])
+          &[type="submit"]
             border-radius: .3em
             width: 5em
             background: whitesmoke
@@ -149,3 +159,7 @@ body
             cursor: pointer
             margin: auto
             margin-left: .5em
+            margin-right: .3em
+
+          &[type='file']
+            display: none

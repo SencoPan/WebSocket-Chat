@@ -4,6 +4,7 @@ head
     meta(charset='UTF-8')
     block links
         link(rel='stylesheet' type='text/css' href='./chatStyle.css')
+        link(rel='stylesheet' href='https://use.fontawesome.com/releases/v5.8.2/css/all.css' integrity='sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay' crossorigin='anonymous')
     block title
 
 body
@@ -31,8 +32,10 @@ body
                     input(type='text' placeholder='Введите свое имя')
                     input(type='submit' value='Send')
                 .input.message-sender(style={display:'none'})
+                    i.fas.fa-thumbtack
                     input(type='text' placeholder='Введите сообщение')
                     input(type='submit' value='Send')
+                    input(type='file' accept=".png, .jpg, .jpeg")
 
 block scripts
 script(src='./client.js')
