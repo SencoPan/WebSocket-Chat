@@ -133,6 +133,7 @@ body {
   display: flex;
   justify-content: center;
   min-height: 2.5em;
+  max-height: 2.5em;
   border-top: darkgrey solid 0.02em;
   border-bottom: darkgrey solid 0.02rem;
   border-bottom-left-radius: 0.3em;
