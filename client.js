@@ -2,7 +2,8 @@ const messageBox = document.getElementsByClassName('messages')[0];
 const inputAuth = document.getElementsByTagName('input')[0];
 const input = document.getElementsByTagName('input')[2];
 const fileinput = document.getElementsByTagName('input')[4];
-const submitButton = document.getElementsByTagName('input')[3];
+const submitButtonText = document.getElementsByTagName('input')[3];
+const submitButtonName = document.getElementsByTagName('input')[1];
 const authBlock = document.getElementsByClassName('auth')[0];
 const messageBlock = document.getElementsByClassName('message-sender')[0];
 const userBlock = document.getElementsByClassName('users')[0];
@@ -169,13 +170,17 @@ if (!window.WebSocket) {
 
     input.onkeypress = async event => {
         if (event.keyCode === 13 && input.value) {
-            await connection.send(input.value.toString());
+            await connection.send(input.value);
             input.value = '';
         }
     };
 
-    submitButton.onclick = async event => {
+    submitButtonText.onclick = async event => {
         input.dispatchEvent(new KeyboardEvent('keypress',{ keyCode: 13 }));
+    };
+
+    submitButtonName.onclick = async event => {
+        inputAuth.dispatchEvent(new KeyboardEvent('keypress',{ keyCode: 13 }));
     };
 
     attachmentIcon.onclick = async event => {

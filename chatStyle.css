@@ -63,6 +63,11 @@ body {
   width: 12em;
   height: 2.3em;
   margin: 1em auto 1em auto;
+  border-radius: 0.3em;
+  background: whitesmoke;
+  border: #91a9c1 solid 0.05em;
+  color: #285473;
+  cursor: pointer;
 }
 .content .UI .user-heap, .content .UI .log-user, .content .UI .attachment-box, .content .UI .confirm-block {
   color: #285473;
