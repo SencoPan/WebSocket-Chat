@@ -72,7 +72,7 @@ wsServer.on('request', async (request) => {
 
         if(data.type === 'image'){
             for (let client of connections) {
-                client.sendUTF( JSON.stringify({ type: 'image', data: data.data, author: username}));
+                await client.sendUTF( JSON.stringify({ type: 'image', data: data.data, author: username}));
             }
         }
         else if (data.type === 'disconnect'){
@@ -90,7 +90,7 @@ wsServer.on('request', async (request) => {
             names.push(username);
 
             for (let client of connections) {
-                await client.sendUTF( JSON.stringify({ type: 'name', data: names }));
+                 client.sendUTF( JSON.stringify({ type: 'name', data: names }));
             }
 
             console.log("WS -" + (Date().toString()) + '- User is known as: ' + username);
