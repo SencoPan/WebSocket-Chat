@@ -154,8 +154,7 @@ body {
   border: #91a9c1 solid 0.01em;
   border-radius: 0.3em;
   padding: 0.5em;
-  margin: auto;
-  margin-right: 0;
+  margin: auto 0;
 }
 .content .UI .message-box .input input[type=submit] {
   border-radius: 0.3em;

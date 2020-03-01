@@ -72,7 +72,7 @@ wsServer.on('request', async (request) => {
 
         if(data.type === 'image'){
             for (let client of connections) {
-                await client.sendUTF( JSON.stringify({ type: 'image', data: data.data, author: username}));
+                client.sendUTF( JSON.stringify({ type: 'image', data: data.data, author: username}));
             }
         }
         else if (data.type === 'disconnect'){
@@ -105,7 +105,7 @@ wsServer.on('request', async (request) => {
             };
 
             for (let client of connections) {
-                await client.sendUTF(JSON.stringify(json))
+                client.sendUTF(JSON.stringify(json))
             }
         }
     });
