@@ -90,7 +90,7 @@ wsServer.on('request', async (request) => {
             names.push(username);
 
             for (let client of connections) {
-                client.sendUTF( JSON.stringify({ type: 'name', data: names }));
+                await client.sendUTF( JSON.stringify({ type: 'name', data: names }));
             }
 
             console.log("WS -" + (Date().toString()) + '- User is known as: ' + username);
