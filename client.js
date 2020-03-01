@@ -177,7 +177,7 @@ if (!window.WebSocket) {
     };
 
     fileinput.onchange = async event => {
-        await reader.readAsDataURL(fileinput.files[0]);
+        reader.readAsDataURL(fileinput.files[0]);
 
         reader.onloadend = async () => {
             connection.send(JSON.stringify({type: 'image', data: reader.result}));

@@ -49,7 +49,7 @@ const wsServer = new WebSocket({
     maxReceivedMessageSize: 10 * 1024 * 1024
 });
 
-wsServer.on('request', function(request) {
+wsServer.on('request', async (request) => {
     console.log(`WS - ${Date().toString()} - Request from origin: ${request.origin}`);
 
     let connection = request.accept(null, request.origin);
