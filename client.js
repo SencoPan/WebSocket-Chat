@@ -2,16 +2,14 @@ const messageBox = document.getElementsByClassName('messages')[0];
 const inputAuth = document.getElementsByTagName('input')[0];
 const input = document.getElementsByTagName('input')[2];
 const fileinput = document.getElementsByTagName('input')[4];
-const submitButton = document.getElementsByTagName('input')[1];
+const submitButton = document.getElementsByTagName('input')[3];
 const authBlock = document.getElementsByClassName('auth')[0];
 const messageBlock = document.getElementsByClassName('message-sender')[0];
 const userBlock = document.getElementsByClassName('users')[0];
 const logBlock = document.getElementsByClassName('log-user')[0];
-const icon = document.getElementsByTagName('i')[0];
+const attachmentIcon = document.getElementsByTagName('i')[0];
 
 const reader = new FileReader();
-
-console.log(document.getElementsByTagName('input'));
 
 const createUser = async (info) => {
     const newUser = document.createElement('div');
@@ -31,14 +29,12 @@ const createUser = async (info) => {
 
 const createMessage = async (info) => {
     const newMessage = document.createElement('div');
-
     const name = document.createTextNode(`${info.author}`);
 
     newMessage.insertAdjacentHTML('beforeend', `
             <p class="name"></p>
             <p></p>
     `);
-
     newMessage.children[0].appendChild(name);
 
     return newMessage;
@@ -52,12 +48,14 @@ const addImage = async (imageInfo) => {
 
     newImage.children[1].appendChild(image);
     newImage.className = 'message';
+
     messageBox.append(newImage);
     messageBox.scrollTop = messageBox.scrollHeight;
 };
 
 const addMessage = async (message) => {
     console.log('message added');
+
     const text = document.createTextNode(`${message.text}`);
     const newMessage = await createMessage(message);
 
@@ -70,17 +68,21 @@ const addMessage = async (message) => {
 
 const addUser = async user => {
     console.log('User added', user);
+
     const newUser = await createUser(user);
+
     userBlock.append(newUser);
 };
 
 const addLog = async (user, logType) => {
     const newUser = await createUser(user);
 
+    newUser.children[0].remove();
     newUser.style.color = logType;
     newUser.className = 'log';
 
     logBlock.append(newUser);
+
     setTimeout(() => {
         newUser.style.display = 'none'
     }, 5000)
@@ -95,8 +97,9 @@ const HOST = location.origin.replace(/^http/, 'ws');
 window.WebSocket = window.WebSocket || window.MozWebSocket;
 
 if (!window.WebSocket) {
-    messageBox.innerHTML = '<p class="message"> Sorry, but your browser doesn\'t</p>';
+    messageBox.innerHTML = '<p class="message" style="color:red"> Sorry, but your browser doesn\'t</p>';
     input.style.display = 'none';
+    inputAuth.style.display = 'none';
 } else {
     let user = false;
     let names = [];
@@ -167,12 +170,15 @@ if (!window.WebSocket) {
     input.onkeypress = async event => {
         if (event.keyCode === 13 && input.value) {
             await connection.send(input.value.toString());
-
             input.value = '';
         }
     };
 
-    icon.onclick = async event => {
+    submitButton.onclick = async event => {
+        input.dispatchEvent(new KeyboardEvent('keypress',{ keyCode: 13 }));
+    };
+
+    attachmentIcon.onclick = async event => {
         fileinput.click()
     };
 

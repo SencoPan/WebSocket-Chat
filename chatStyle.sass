@@ -1,6 +1,7 @@
 body
   background: #edeef0
   margin: 0
+
 .content
   display: flex
   flex-direction: column
@@ -17,13 +18,15 @@ body
     a
       text-align: center
       margin-bottom: .2em
+
   .app-header
     margin-bottom: .9em
     background: #285473
     flex-direction: row
+
     .app-name
       display: flex
-      width: 50em
+      width: 70em
       margin: 0 auto 0 auto
       color: white
 
@@ -41,20 +44,31 @@ body
   //  margin-left: auto
   .UI
     display: flex
-    width: 50em
+    width: 70em
     height: calc(100vh - 2.5em - 0.7em - 1em)
     color: gainsboro
     margin: 0 auto 0 auto
 
-    .user-heap, .message-box, .log-user
+    .user-heap, .message-box, .log-user, .attachment-box
       border-radius: .3em
+    .confirm-block
+      display: flex
+      flex-direction: column
+      justify-content: space-between
+      .submit
+        display: flex
+        input
+          width: 12em
+          height: 2.3em
+          margin: 1em auto 1em auto
 
-    .user-heap, .log-user
+    .user-heap, .log-user, .attachment-box, .confirm-block
       color: #285473
       text-align: left
       background: white
       width: 13rem
       height: 20em
+      min-height: 5em
       overflow-y: auto
 
       .info
@@ -89,6 +103,7 @@ body
       justify-content: end
       -webkit-justify-content: flex-end
       margin-left: 1em
+      margin-right: 1em
 
       .messages
         word-wrap: break-word

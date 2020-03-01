@@ -38,6 +38,15 @@ body
                     input(type='text' placeholder='Введите сообщение')
                     input(type='submit' value='Send')
                     input(type='file' accept=".png, .jpg, .jpeg .gif" multiple)
+            .attachment-box
+                .confirm-block
+                    .info
+                        p Here will temporary stored image you want to send
+                        hr
+                    .images
+                        .image-preview
+                    .submit
+                        input(type='submit' class='submitImages' value="Submit")
 
 block scripts
 script(src='./client.js')
