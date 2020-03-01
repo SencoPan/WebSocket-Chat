@@ -156,6 +156,9 @@ body {
   padding: 0.5em;
   margin: auto 0;
 }
+.content .UI .message-box .input input[type=text] .message-sender {
+  width: 34em;
+}
 .content .UI .message-box .input input[type=submit] {
   border-radius: 0.3em;
   width: 5em;
@@ -163,9 +166,7 @@ body {
   border: #91a9c1 solid 0.05em;
   color: slategrey;
   cursor: pointer;
-  margin: auto;
-  margin-left: 0.5em;
-  margin-right: 0.3em;
+  margin: auto 0.3em auto 0.5em;
 }
 .content .UI .message-box .input input[type=file] {
   display: none;
