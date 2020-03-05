@@ -75,7 +75,20 @@ body
       height: 20em
       min-height: 5em
       overflow-y: auto
-
+      .images
+        display: flex
+        flex-direction: column
+        .image
+          display: flex
+          flex-direction: row
+          justify-content: space-around
+          margin-left: .3em
+          img
+            max-width: 2.3em
+          p
+            padding: 0
+            margin: auto
+            text-align: center
       .info
         p
           text-align: center

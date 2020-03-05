@@ -78,6 +78,24 @@ body {
   min-height: 5em;
   overflow-y: auto;
 }
+.content .UI .user-heap .images, .content .UI .log-user .images, .content .UI .attachment-box .images, .content .UI .confirm-block .images {
+  display: flex;
+  flex-direction: column;
+}
+.content .UI .user-heap .images .image, .content .UI .log-user .images .image, .content .UI .attachment-box .images .image, .content .UI .confirm-block .images .image {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-left: 0.3em;
+}
+.content .UI .user-heap .images .image img, .content .UI .log-user .images .image img, .content .UI .attachment-box .images .image img, .content .UI .confirm-block .images .image img {
+  max-width: 2.3em;
+}
+.content .UI .user-heap .images .image p, .content .UI .log-user .images .image p, .content .UI .attachment-box .images .image p, .content .UI .confirm-block .images .image p {
+  padding: 0;
+  margin: auto;
+  text-align: center;
+}
 .content .UI .user-heap .info p, .content .UI .log-user .info p, .content .UI .attachment-box .info p, .content .UI .confirm-block .info p {
   text-align: center;
 }

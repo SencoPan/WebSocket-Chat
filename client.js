@@ -9,10 +9,28 @@ const messageBlock = document.getElementsByClassName('message-sender')[0];
 const userBlock = document.getElementsByClassName('users')[0];
 const logBlock = document.getElementsByClassName('log-user')[0];
 const attachmentIcon = document.getElementsByTagName('i')[0];
+const imagesBlock = document.getElementsByClassName('images')[0];
+
 
 const reader = new FileReader();
 
-const createUser = async (info) => {
+const createImage = async (src, name) => {
+    const imageBlock = document.createElement('div');
+
+    const imageTag = document.createElement('img');
+    const imageText = document.createElement('p');
+
+    imageTag.src = src;
+    imageText.innerText = name;
+    imageBlock.className = 'image';
+
+    imageBlock.append(imageTag);
+    imageBlock.append(imageText);
+
+    return imageBlock;
+};
+
+const createUser = async info => {
     const newUser = document.createElement('div');
     const name = document.createTextNode(`${info}`);
 
@@ -28,7 +46,7 @@ const createUser = async (info) => {
     return newUser;
 };
 
-const createMessage = async (info) => {
+const createMessage = async info => {
     const newMessage = document.createElement('div');
     const name = document.createTextNode(`${info.author}`);
 
@@ -41,7 +59,7 @@ const createMessage = async (info) => {
     return newMessage;
 };
 
-const addImage = async (imageInfo) => {
+const addImage = async imageInfo => {
     const newImage = await createMessage(imageInfo);
     const image = document.createElement('img');
 
@@ -54,7 +72,7 @@ const addImage = async (imageInfo) => {
     messageBox.scrollTop = messageBox.scrollHeight;
 };
 
-const addMessage = async (message) => {
+const addMessage = async message => {
     console.log('message added');
 
     const text = document.createTextNode(`${message.text}`);
@@ -85,7 +103,7 @@ const addLog = async (user, logType) => {
     logBlock.append(newUser);
 
     setTimeout(() => {
-        newUser.style.display = 'none'
+        newUser.remove();
     }, 5000)
 };
 
@@ -98,7 +116,7 @@ const HOST = location.origin.replace(/^http/, 'ws');
 window.WebSocket = window.WebSocket || window.MozWebSocket;
 
 if (!window.WebSocket) {
-    messageBox.innerHTML = '<p class="message" style="color:red"> Sorry, but your browser doesn\'t</p>';
+    messageBox.innerHTML = "You're browser does not support WebSocket.";
     input.style.display = 'none';
     inputAuth.style.display = 'none';
 } else {
@@ -188,10 +206,12 @@ if (!window.WebSocket) {
     };
 
     fileinput.onchange = async event => {
+        console.log(fileinput.files[0]);
         reader.readAsDataURL(fileinput.files[0]);
 
         reader.onloadend = async () => {
-            connection.send(JSON.stringify({type: 'image', data: reader.result}));
+            imagesBlock.append(await createImage(reader.result, fileinput.files[0].name));
+            //connection.send(JSON.stringify({type: 'image', data: reader.result}));
         }
     };
 
