@@ -18,13 +18,20 @@ const createImage = async (src, name) => {
     const imageBlock = document.createElement('div');
     const imageTag = document.createElement('img');
     const imageText = document.createElement('p');
+    const imageDelete = document.createElement('i');
 
     imageTag.src = src;
     imageText.innerText = name;
     imageBlock.className = 'image';
+    imageDelete.className = 'fa fa-trash-alt deleteImage';
+
+    imageDelete.onclick = async event => {
+      imageBlock.remove()
+    };
 
     imageBlock.append(imageTag);
     imageBlock.append(imageText);
+    imageBlock.append(imageDelete);
 
     return imageBlock;
 };
