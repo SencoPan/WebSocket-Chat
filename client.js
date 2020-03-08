@@ -10,13 +10,12 @@ const userBlock = document.getElementsByClassName('users')[0];
 const logBlock = document.getElementsByClassName('log-user')[0];
 const attachmentIcon = document.getElementsByTagName('i')[0];
 const imagesBlock = document.getElementsByClassName('images')[0];
-
+const sendImagesButton = document.getElementsByClassName('submitImages')[0];
 
 const reader = new FileReader();
 
 const createImage = async (src, name) => {
     const imageBlock = document.createElement('div');
-
     const imageTag = document.createElement('img');
     const imageText = document.createElement('p');
 
@@ -169,6 +168,7 @@ if (!window.WebSocket) {
         }
     };
 
+    // Unmount needed
     inputAuth.onkeypress = async event => {
         if (event.keyCode === 13 && inputAuth.value) {
             if (inputAuth.value.length > 15){
@@ -213,6 +213,17 @@ if (!window.WebSocket) {
             imagesBlock.append(await createImage(reader.result, fileinput.files[0].name));
             //connection.send(JSON.stringify({type: 'image', data: reader.result}));
         }
+    };
+
+    sendImagesButton.onclick = async () => {
+        const initialImages = document.getElementsByClassName('image');
+
+        initialImages.length ?
+            Array.from(initialImages).forEach( image => {
+                connection.send(JSON.stringify({type: 'image', data: image.children[0].src}));
+                image.remove()
+            })
+            : await addLog('Нет изображений', 'red');
     };
 
     window.onbeforeunload = async () => {

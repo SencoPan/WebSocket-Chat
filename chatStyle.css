@@ -3,6 +3,12 @@ body {
   margin: 0;
 }
 
+hr {
+  background-color: #eee;
+  border: 0;
+  height: 0.1em;
+}
+
 .content {
   display: flex;
   flex-direction: column;
@@ -29,7 +35,7 @@ body {
 }
 .content .app-header .app-name {
   display: flex;
-  width: 70em;
+  width: 66em;
   margin: 0 auto 0 auto;
   color: white;
 }
@@ -43,7 +49,7 @@ body {
 }
 .content .UI {
   display: flex;
-  width: 70em;
+  width: auto;
   height: calc(100vh - 2.5em - 0.7em - 1em);
   color: gainsboro;
   margin: 0 auto 0 auto;
@@ -58,6 +64,12 @@ body {
 }
 .content .UI .confirm-block .submit {
   display: flex;
+  flex-direction: column;
+}
+.content .UI .confirm-block .submit hr {
+  min-width: 100%;
+  max-width: 100%;
+  margin: 0.2em 0 0 0;
 }
 .content .UI .confirm-block .submit input {
   width: 12em;
@@ -81,12 +93,19 @@ body {
 .content .UI .user-heap .images, .content .UI .log-user .images, .content .UI .attachment-box .images, .content .UI .confirm-block .images {
   display: flex;
   flex-direction: column;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  height: 100%;
+}
+.content .UI .user-heap .images::-webkit-scrollbar, .content .UI .log-user .images::-webkit-scrollbar, .content .UI .attachment-box .images::-webkit-scrollbar, .content .UI .confirm-block .images::-webkit-scrollbar {
+  display: none;
 }
 .content .UI .user-heap .images .image, .content .UI .log-user .images .image, .content .UI .attachment-box .images .image, .content .UI .confirm-block .images .image {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   margin-left: 0.3em;
+  margin-bottom: 0.1em;
 }
 .content .UI .user-heap .images .image img, .content .UI .log-user .images .image img, .content .UI .attachment-box .images .image img, .content .UI .confirm-block .images .image img {
   max-width: 2.3em;
@@ -111,11 +130,6 @@ body {
 }
 .content .UI .user-heap .user i, .content .UI .user-heap .log i, .content .UI .log-user .user i, .content .UI .log-user .log i, .content .UI .attachment-box .user i, .content .UI .attachment-box .log i, .content .UI .confirm-block .user i, .content .UI .confirm-block .log i {
   margin-right: 0.3em;
-}
-.content .UI .user-heap hr, .content .UI .log-user hr, .content .UI .attachment-box hr, .content .UI .confirm-block hr {
-  background-color: #eee;
-  border: 0;
-  height: 0.1em;
 }
 .content .UI .log-user {
   margin-top: 1em;

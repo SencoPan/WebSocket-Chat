@@ -2,6 +2,11 @@ body
   background: #edeef0
   margin: 0
 
+hr
+  background-color: #eee
+  border: 0
+  height: .1em
+
 .content
   display: flex
   flex-direction: column
@@ -26,7 +31,7 @@ body
 
     .app-name
       display: flex
-      width: 70em
+      width: 66em
       margin: 0 auto 0 auto
       color: white
 
@@ -42,21 +47,32 @@ body
   //  justify-content: flex-end
   //  width: 15em
   //  margin-left: auto
+
   .UI
     display: flex
-    width: 70em
+    width: auto
     height: calc(100vh - 2.5em - 0.7em - 1em)
     color: gainsboro
     margin: 0 auto 0 auto
 
     .user-heap, .message-box, .log-user, .attachment-box
       border-radius: .3em
+
     .confirm-block
       display: flex
       flex-direction: column
       justify-content: space-between
+
       .submit
         display: flex
+        flex-direction: column
+
+        hr
+          min-width: 100%
+          max-width: 100%
+          margin: .2em 0 0 0
+
+
         input
           width: 12em
           height: 2.3em
@@ -75,20 +91,31 @@ body
       height: 20em
       min-height: 5em
       overflow-y: auto
+
       .images
         display: flex
         flex-direction: column
+        overflow-y: scroll
+        scrollbar-width: none
+        height: 100%
+
+        &::-webkit-scrollbar
+          display: none
+
         .image
           display: flex
           flex-direction: row
           justify-content: space-around
           margin-left: .3em
+          margin-bottom: .1em
+
           img
             max-width: 2.3em
           p
             padding: 0
             margin: auto
             text-align: center
+
       .info
         p
           text-align: center
@@ -104,10 +131,6 @@ body
         i
           margin-right: .3em
 
-      hr
-        background-color: #eee
-        border: 0
-        height: .1em
 
     .log-user
       margin-top: 1em
