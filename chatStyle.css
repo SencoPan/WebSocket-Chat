@@ -103,14 +103,14 @@ hr {
 .content .UI .user-heap .images .image, .content .UI .log-user .images .image, .content .UI .attachment-box .images .image, .content .UI .confirm-block .images .image {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   margin-left: 0.3em;
   margin-bottom: 0.1em;
 }
 .content .UI .user-heap .images .image i.deleteImage, .content .UI .log-user .images .image i.deleteImage, .content .UI .attachment-box .images .image i.deleteImage, .content .UI .confirm-block .images .image i.deleteImage {
   color: #ff6e6e;
   display: flex;
-  margin: auto;
+  margin: auto 0.1em auto 0.1em;
   font-size: 1.3em;
 }
 .content .UI .user-heap .images .image i.deleteImage:hover, .content .UI .log-user .images .image i.deleteImage:hover, .content .UI .attachment-box .images .image i.deleteImage:hover, .content .UI .confirm-block .images .image i.deleteImage:hover {

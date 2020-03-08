@@ -21,7 +21,7 @@ const createImage = async (src, name) => {
     const imageDelete = document.createElement('i');
 
     imageTag.src = src;
-    imageText.innerText = name;
+    imageText.innerText = name.substr(0, 15);
     imageBlock.className = 'image';
     imageDelete.className = 'fa fa-trash-alt deleteImage';
 
