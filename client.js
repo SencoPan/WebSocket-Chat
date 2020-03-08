@@ -146,8 +146,6 @@ if (!window.WebSocket) {
     connection.onmessage = async (receivedMessage) => {
         const message =  JSON.parse(receivedMessage.data);
 
-        message ? true : console.error('Bad message');
-
         if (message.type === 'name') {
             const initialUsers = document.getElementsByClassName('user');
 
@@ -213,12 +211,10 @@ if (!window.WebSocket) {
     };
 
     fileinput.onchange = async event => {
-        console.log(fileinput.files[0]);
         reader.readAsDataURL(fileinput.files[0]);
 
         reader.onloadend = async () => {
             imagesBlock.append(await createImage(reader.result, fileinput.files[0].name));
-            //connection.send(JSON.stringify({type: 'image', data: reader.result}));
         }
     };
 
