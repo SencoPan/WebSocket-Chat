@@ -14,6 +14,15 @@ const sendImagesButton = document.getElementsByClassName('submitImages')[0];
 
 const reader = new FileReader();
 
+const currentTime = async () => {
+    const today = new Date();
+
+    let date = (today.getMonth()+1) + '-' + today.getDate();
+    let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+    return `${date} - ${time}`;
+};
+
 const createImage = async (src, name) => {
     const imageBlock = document.createElement('div');
     const imageTag = document.createElement('img');
@@ -55,12 +64,17 @@ const createUser = async info => {
 const createMessage = async info => {
     const newMessage = document.createElement('div');
     const name = document.createTextNode(`${info.author}`);
+    const sendTime = info.time || await currentTime();
 
     newMessage.insertAdjacentHTML('beforeend', `
-            <p class="name"></p>
+            <div>
+                <p class="name"></p>
+                <span>${sendTime}</span>
+            </div>
             <p></p>
     `);
-    newMessage.children[0].appendChild(name);
+
+    newMessage.children[0].children[0].appendChild(name);
 
     return newMessage;
 };

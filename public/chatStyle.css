@@ -186,7 +186,11 @@ hr {
   max-width: 30em;
   color: #8a8a8a;
 }
-.content .UI .message-box .message .name {
+.content .UI .message-box .message div {
+  display: flex;
+  justify-content: space-between;
+}
+.content .UI .message-box .message div .name, .content .UI .message-box .message div span {
   max-height: 2em;
   color: #285473;
   font-weight: bolder;
