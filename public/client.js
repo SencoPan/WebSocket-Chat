@@ -14,6 +14,8 @@ const sendImagesButton = document.getElementsByClassName('submitImages')[0];
 
 const reader = new FileReader();
 
+
+// for(let i = 0; i < 5; i++) setTimeout(() => console.log(i), i * 1000);
 const currentTime = async () => {
     const today = new Date();
 
@@ -178,6 +180,10 @@ if (!window.WebSocket) {
                     await addUser(name)
                 }
             }
+        }
+        if(message.type === 'test'){
+            console.log(message);
+            await addMessage(message)
         }
         if(message.type === 'image'){
             await addImage(message);

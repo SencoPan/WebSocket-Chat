@@ -1,9 +1,8 @@
 const WebSocket = require('websocket').server;
-const { database, addMessage, getMessage } = require('../database/database');
+const database = require('../database/database');
 
 let connections = [];
 let names = [];
-
 
 module.exports = async server => {
     const wsServer = new WebSocket({
@@ -45,6 +44,12 @@ module.exports = async server => {
 
                 for (let client of connections) {
                     client.sendUTF( JSON.stringify({ type: 'name', data: names }));
+                }
+
+
+                for (let client of connections) {
+
+                    client.sendUTF( JSON.stringify({ type: 'test', data: messages }));
                 }
             }
             else if( username === false ) {

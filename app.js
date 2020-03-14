@@ -8,7 +8,6 @@ const port = process.env.PORT || require('./config/config').server.port;
 
 let template;
 
-
 const server = http.createServer(async (req, res) => {
     console.log(`${req.method} - ${Date().toString()} - ${req.url}`);
     if(req.url === '/'){
@@ -37,7 +36,6 @@ const server = http.createServer(async (req, res) => {
         res.end()
     }
 });
-
 
 server.listen(port, () => {
     console.log(`${Date().toString()} - Server is launched at localhost:${port}`)

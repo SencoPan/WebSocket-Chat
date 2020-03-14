@@ -1,43 +1,12 @@
-const sqlite3 = require('sqlite3').verbose();
+const redis = require('redis');
+const secretConf = require('../config/secretConfig') || {redis: { url : undefined }};
 
-const currentTime = async () => {
-    const today = new Date();
+const url = process.env.REDISCLOUD_URL || secretConf.redis.url;
 
-    let date = (today.getMonth()+1) + '-' + today.getDate();
-    let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+const client = redis.createClient(url, {no_ready_check: true});
 
-    return `${date} - ${time}`;
-};
-
-let database = new sqlite3.Database('./database/last-200-messages.db', async (err) => {
-    if ( err )
-        console.log( err );
-
-    console.log('Connected');
+client.on('connect', async () => {
+   console.log('connected')
 });
 
-const takeMessages = `SELECT * FROM message`;
-const insertMessage = `INSERT INTO message(message, data) VALUES(?, ?)`;
-
-const initializeTable = `CREATE TABLE IF NOT EXISTS message (
-                            id INTEGER PRIMARY KEY AUTOINCREMENT,
-                            message VARCHAR(255) NOT NULL,
-                            date VARCHAR(255) NOT NULL DEFAULT ${currentTime()}
-                        )`
-;
-
-database.serialize(async () => {
-    database.prepare(initializeTable).run().finalize();
-});
-
-module.exports.database = database;
-
-module.exports.addMessage = async database =>
-        database.serialize(async (text, data) => {
-                database.prepare(insertMessage, [text, data]).run();
-        });
-
-module.exports.getMessage = async database =>
-        database.serialize(async () => {
-            database.prepare(takeMessages).run();
-        });
+module.exports = client;
