@@ -13,6 +13,7 @@ module.exports = async server => {
     });
 
     // Test
+    await addMessages(database, 'Danny', 'some date', 'blablabla');
     const showMeAlready = (text) => { console.log( text ) };
     await getMessages(database, showMeAlready);
 

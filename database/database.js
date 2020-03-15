@@ -14,11 +14,11 @@ client.auth(secretConf.redis.password);
 module.exports.database = client;
 
 module.exports.getMessages = async (database, callback) => {
-    database.hgetall('messages',  async (err, reply) => {
+    database.lrange('messages', 0, -1,  async (err, reply) => {
         err ? console.error(err) : callback(reply);
     });
 };
 
 module.exports.addMessages = async (database, author, date, message) => {
-    database.hset('messages', 'author', author, 'date', date, 'message', message);
+    database.rpush('messages', JSON.stringify({author, date, message}));
 };
