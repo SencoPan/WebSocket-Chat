@@ -2,6 +2,7 @@ const http = require('http');
 const pug = require('pug');
 const fs = require('fs');
 
+const {database} = require('./database/database');
 const webSocket = require('./websocket/websocket');
 
 const port = process.env.PORT || require('./config/config').server.port;
@@ -37,8 +38,12 @@ const server = http.createServer(async (req, res) => {
     }
 });
 
-server.listen(port, () => {
-    console.log(`${Date().toString()} - Server is launched at localhost:${port}`)
-});
+database.on('connect', () => {
+    console.log(`${Date().toString()} - database is running`);
 
-webSocket(server);
+    server.listen(port, () => {
+        console.log(`${Date().toString()} - Server is launched at localhost:${port}`)
+    });
+
+    webSocket(server);
+});

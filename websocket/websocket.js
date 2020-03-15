@@ -1,8 +1,9 @@
 const WebSocket = require('websocket').server;
-const database = require('../database/database');
+const { database, getMessages, addMessages } = require('../database/database');
 
 let connections = [];
 let names = [];
+
 
 module.exports = async server => {
     const wsServer = new WebSocket({
@@ -10,6 +11,11 @@ module.exports = async server => {
         maxReceivedFrameSize: 30 * 1024 * 1024,
         maxReceivedMessageSize: 10 * 1024 * 1024
     });
+
+    // Test
+    const showMeAlready = (text) => { console.log( text ) };
+    await getMessages(database, showMeAlready);
+
 
     wsServer.on('request', async (request) => {
         console.log(`WS - ${Date().toString()} - Request from origin: ${request.origin}`);
@@ -46,9 +52,7 @@ module.exports = async server => {
                     client.sendUTF( JSON.stringify({ type: 'name', data: names }));
                 }
 
-
                 for (let client of connections) {
-
                     client.sendUTF( JSON.stringify({ type: 'test', data: messages }));
                 }
             }
