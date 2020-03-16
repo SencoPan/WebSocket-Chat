@@ -1,5 +1,5 @@
 const WebSocket = require('websocket').server;
-const { database, getMessages, addMessages } = require('../database/database');
+const { database, receiveMessages, insertMessage } = require('../database/database');
 
 let connections = [];
 let names = [];
@@ -13,9 +13,9 @@ module.exports = async server => {
     });
 
     // Test
-    await addMessages(database, 'Danny', 'some date', 'blablabla');
+    await insertMessage(database, 'Danny', 'some date', `${Math.random()}`);
     const showMeAlready = (text) => { console.log( text ) };
-    await getMessages(database, showMeAlready);
+    await receiveMessages(database, showMeAlready);
 
 
     wsServer.on('request', async (request) => {
