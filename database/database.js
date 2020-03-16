@@ -9,7 +9,7 @@ client.on('error', error => {
   console.log(`${Date.toString()} - Error occur in database client - ${error}`)
 });
 
-client.auth(secretConf.redis.password);
+client.auth(secretConf.redis.password || process.env.REDISCLOUD_SECRETKEY);
 
 const insertChunk = async (database, author, date, message) => {
     const currentChunk = `messageChunk_${Math.random().toString().substr(2)}`;
