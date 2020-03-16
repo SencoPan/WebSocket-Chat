@@ -11,11 +11,7 @@ if ( process.env.DEV === true ) {
 const url = process.env.REDISCLOUD_URL || secretConf.redis.url;
 const client = redis.createClient(url, {no_ready_check: true});
 
-client.auth(secretConf.redis.password || process.env.REDISCLOUD_SECRETKEY);
-
-client.on('error', error => {
-    console.log(`DB - Error occur in database client - ${error}`)
-});
+client.auth(secretConf.redis.secretKey || process.env.REDISCLOUD_SECRETKEY);
 
 const insertChunk = async (database, author, date, message) => {
     const currentChunk = `messageChunk_${Math.random().toString().substr(2)}`;

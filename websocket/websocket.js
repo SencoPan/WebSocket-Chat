@@ -13,9 +13,9 @@ module.exports = async server => {
     });
 
     // Test
-    //await insertMessage(database, 'Danny', 'some date', `${Math.random()}`);
-    const showMeAlready = (text) => { console.log( text ) };
-    await receiveMessages(database, showMeAlready);
+    // await insertMessage(database, 'Danny', 'some date', `${Math.random()}`);
+    // const showMeAlready = (text) => { console.log( text ) };
+    // await receiveMessages(database, showMeAlready);
 
 
     wsServer.on('request', async (request) => {
