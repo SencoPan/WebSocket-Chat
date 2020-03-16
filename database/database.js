@@ -1,15 +1,21 @@
 const redis = require('redis');
-const secretConf = require('../config/secretConfig') || {redis: { url : undefined }};
+
+let secretConf;
+
+if ( process.env.DEV === true ) {
+    secretConf = require('../config/secretConfig');
+} else {
+    secretConf = { redis: {} }
+}
 
 const url = process.env.REDISCLOUD_URL || secretConf.redis.url;
-
 const client = redis.createClient(url, {no_ready_check: true});
 
-client.on('error', error => {
-  console.log(`${Date.toString()} - Error occur in database client - ${error}`)
-});
-
 client.auth(secretConf.redis.password || process.env.REDISCLOUD_SECRETKEY);
+
+client.on('error', error => {
+    console.log(`DB - Error occur in database client - ${error}`)
+});
 
 const insertChunk = async (database, author, date, message) => {
     const currentChunk = `messageChunk_${Math.random().toString().substr(2)}`;
