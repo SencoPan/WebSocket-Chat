@@ -13,7 +13,7 @@ module.exports = async server => {
     });
 
     // Test
-    await insertMessage(database, 'Danny', 'some date', `${Math.random()}`);
+    //await insertMessage(database, 'Danny', 'some date', `${Math.random()}`);
     const showMeAlready = (text) => { console.log( text ) };
     await receiveMessages(database, showMeAlready);
 
@@ -51,10 +51,6 @@ module.exports = async server => {
 
                 for (let client of connections) {
                     client.sendUTF( JSON.stringify({ type: 'name', data: names }));
-                }
-
-                for (let client of connections) {
-                    client.sendUTF( JSON.stringify({ type: 'test', data: messages }));
                 }
             }
             else if( username === false ) {

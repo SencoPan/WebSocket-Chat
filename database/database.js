@@ -42,7 +42,7 @@ module.exports.receiveMessages = async (database, callback) => {
 };
 
 module.exports.insertMessage = async (database, author, date, message) => {
-   database.lindex('messageChunk', 0, async(err, currentChunk) => {
+   database.lindex('messageChunk', 0, async (err, currentChunk) => {
        if(!currentChunk)
            await insertChunk(database, author, date, message);
        else{
