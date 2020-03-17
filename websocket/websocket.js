@@ -8,8 +8,14 @@ let names = [];
 const currentTime = async () => {
     const today = new Date();
 
-    let date = today.getFullYear() + '.' + (today.getMonth()+1) + '.' + today.getDate();
-    let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    let dateList = [(today.getMonth()+1), today.getDate(), today.getHours(), today.getMinutes(), today.getSeconds()];
+
+    await dateList.forEach( (date, index) => {
+        `${date}`.split('').length !== 2 ? dateList[index] = `0${date}` : false;
+    });
+
+    let date = today.getFullYear() + '.' + dateList[0] + '.' + dateList[1];
+    let time = dateList[2] + ":" + dateList[3] + ":" + dateList[4];
 
     return `${date} - ${time}`;
 };

@@ -15,6 +15,7 @@ hr {
   color: slategrey;
   font-family: Bahnschrift, monospace;
   min-width: 80em;
+  font-weight: 100;
 }
 .content .useless-stuff {
   display: flex;
