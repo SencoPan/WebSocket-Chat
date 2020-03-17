@@ -3,14 +3,14 @@ const pug = require('pug');
 const fs = require('fs');
 
 const {database} = require('./database/database');
-const webSocket = require('./websocket/websocket');
+const { webSocket, currentTime } = require('./websocket/websocket');
 
 const port = process.env.PORT || require('./config/config').server.port;
 
 let template;
 
 const server = http.createServer(async (req, res) => {
-    console.log(`${req.method} - ${Date().toString()} - ${req.url}`);
+    console.log(`${req.method} - ${await currentTime()} - ${req.url}`);
     if(req.url === '/'){
         res.writeHeader(200, {'Content-type':'text/html'});
 
@@ -38,11 +38,11 @@ const server = http.createServer(async (req, res) => {
     }
 });
 
-database.on('connect', () => {
-    console.log(`${Date().toString()} - database is running`);
+database.on('connect', async () => {
+    console.log(`${await currentTime()} - database is running`);
 
-    server.listen(port, () => {
-        console.log(`${Date().toString()} - Server is launched at localhost:${port}`)
+    server.listen(port, async () => {
+        console.log(`${await currentTime()} - Server is launched at localhost:${port}`)
     });
 
     webSocket(server);

@@ -170,11 +170,17 @@ if (!window.WebSocket) {
                 }
             }
         }
-        if(message.type === 'test'){
+        if (message.type === 'chunk') {
+            message.data.forEach( message => {
+                console.log(JSON.parse(message));
+                addMessage(JSON.parse(message))
+            });
+        }
+        if (message.type === 'test'){
             console.log(message);
             await addMessage(message)
         }
-        if(message.type === 'image'){
+        if (message.type === 'image'){
             await addImage(message);
         }
         if(message.type === 'message'){
@@ -245,4 +251,3 @@ if (!window.WebSocket) {
         await removeUser(user, connection);
     };
 }
-module.exports.currentTime = currentTime;

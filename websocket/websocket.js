@@ -1,5 +1,7 @@
 const WebSocket = require('websocket').server;
+
 const { database, receiveMessages, insertMessage } = require('../database/database');
+
 let connections = [];
 let names = [];
 
@@ -13,7 +15,7 @@ const currentTime = async () => {
 };
 
 
-module.exports = async server => {
+module.exports.webSocket = async server => {
     const wsServer = new WebSocket({
         httpServer: server,
         maxReceivedFrameSize: 30 * 1024 * 1024,
@@ -27,7 +29,7 @@ module.exports = async server => {
 
 
     wsServer.on('request', async (request) => {
-        console.log(`WS - ${Date().toString()} - Request from origin: ${request.origin}`);
+        console.log(`WS - ${await currentTime()} - Request from origin: ${request.origin}`);
 
         let connection = request.accept(null, request.origin);
         let username = false;
@@ -36,8 +38,8 @@ module.exports = async server => {
 
         connection.on('message', async (message) => {
             message.type === 'utf8' ?
-                console.log(`WS - ${Date().toString()} - Got message - type - ${message.type}`) :
-                console.log(`WS - ${Date().toString()} - Got bad message`);
+                console.log(`WS - ${await currentTime()} - Got message - type - ${message.type}`) :
+                console.log(`WS - ${await currentTime()} - Got bad message`);
 
             let data = {};
 
@@ -66,13 +68,19 @@ module.exports = async server => {
 
                 names.push(username);
 
+                const sendData = async (reply) => {
+                    connection.sendUTF(JSON.stringify( {type: 'chunk', data: reply} ));
+                };
+
+                await receiveMessages(database, sendData);
+
                 for (let client of connections) {
                     client.sendUTF( JSON.stringify({ type: 'name', data: names }));
                 }
 
-                console.log("WS -" + (Date().toString()) + '- User is known as: ' + username);
+                console.log("WS -" + (await currentTime()) + '- User is known as: ' + username);
             } else {
-                console.log(`WS - ${Date().toString()} - Received message from: ${username} : ${message.utf8Data}`);
+                console.log(`WS - ${await currentTime()} - Received message from: ${username} : ${message.utf8Data}`);
 
                 const json = {
                     type: 'message',
@@ -80,6 +88,8 @@ module.exports = async server => {
                     text: message.utf8Data,
                     author: username
                 };
+
+                await insertMessage(database, json);
 
                 for (let client of connections) {
                     client.sendUTF(JSON.stringify(json))
@@ -90,7 +100,7 @@ module.exports = async server => {
         connection.on('close', async (connection) => {
 
             if (username !== false) {
-                console.log("WS - " + (Date().toString()) + " Peer "
+                console.log("WS - " + (await currentTime()) + " Peer "
                     + connection + " disconnected.");
             }
             connections.forEach( client => {
@@ -104,3 +114,5 @@ module.exports = async server => {
         })
     });
 };
+
+module.exports.currentTime = currentTime;
