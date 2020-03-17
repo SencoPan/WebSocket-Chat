@@ -2,7 +2,7 @@ const http = require('http');
 const pug = require('pug');
 const fs = require('fs');
 
-const {database} = require('./database/database');
+const { database, deleteAllData } = require('./database/database');
 const { webSocket, currentTime } = require('./websocket/websocket');
 
 const port = process.env.PORT || require('./config/config').server.port;
@@ -10,6 +10,7 @@ const port = process.env.PORT || require('./config/config').server.port;
 let template;
 
 const server = http.createServer(async (req, res) => {
+    await deleteAllData(database);
     console.log(`${req.method} - ${await currentTime()} - ${req.url}`);
     if(req.url === '/'){
         res.writeHeader(200, {'Content-type':'text/html'});

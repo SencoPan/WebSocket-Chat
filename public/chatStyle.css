@@ -190,9 +190,15 @@ hr {
 }
 .content .UI .message-box .message div {
   display: flex;
-  justify-content: space-between;
 }
-.content .UI .message-box .message div .name, .content .UI .message-box .message div span {
+.content .UI .message-box .message div span {
+  margin: auto 0 auto 0.5em;
+  font-weight: 100;
+  font-size: 0.8em;
+  height: 1em;
+  color: #b7b7b7;
+}
+.content .UI .message-box .message div .name {
   max-height: 2em;
   color: #285473;
   font-weight: bolder;

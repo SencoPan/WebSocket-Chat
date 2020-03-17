@@ -20,13 +20,13 @@ const insertChunk = async (database, author, date, message) => {
     database.lpush(currentChunk, JSON.stringify({author, date, message}))
 };
 
-/*const deleteAllData = async (database) => {
+const deleteAllData = async (database) => {
     database.keys('*', async (err, reply) => {
         err ? console.error(err) : reply.forEach(rep => {
             database.del(rep);
         });
     });
-};*/
+};
 
 module.exports.database = client;
 
@@ -56,3 +56,5 @@ module.exports.insertMessage = async (database, userObj) => {
        }
    })
 };
+
+module.exports.deleteAllData = deleteAllData;

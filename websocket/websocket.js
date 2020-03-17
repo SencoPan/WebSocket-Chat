@@ -5,7 +5,7 @@ const { database, receiveMessages, insertMessage } = require('../database/databa
 let connections = [];
 let names = [];
 
-const currentTime = async () => {
+const currentTime = async (type) => {
     const today = new Date();
 
     let dateList = [(today.getMonth()+1), today.getDate(), today.getHours(), today.getMinutes(), today.getSeconds()];
@@ -16,6 +16,9 @@ const currentTime = async () => {
 
     let date = today.getFullYear() + '.' + dateList[0] + '.' + dateList[1];
     let time = dateList[2] + ":" + dateList[3] + ":" + dateList[4];
+
+    if (type === 'message')
+        return  `${time}`;
 
     return `${date} - ${time}`;
 };
@@ -35,7 +38,7 @@ module.exports.webSocket = async server => {
 
 
     wsServer.on('request', async (request) => {
-        console.log(`WS - ${await currentTime()} - Request from origin: ${request.origin}`);
+        console.log(`WS -- ${await currentTime()} - Request from origin: ${request.origin}`);
 
         let connection = request.accept(null, request.origin);
         let username = false;
@@ -44,8 +47,8 @@ module.exports.webSocket = async server => {
 
         connection.on('message', async (message) => {
             message.type === 'utf8' ?
-                console.log(`WS - ${await currentTime()} - Got message - type - ${message.type}`) :
-                console.log(`WS - ${await currentTime()} - Got bad message`);
+                console.log(`WS -- ${await currentTime()} - Got message - type - ${message.type}`) :
+                console.log(`WS -- ${await currentTime()} - Got bad message`);
 
             let data = {};
 
@@ -84,13 +87,13 @@ module.exports.webSocket = async server => {
                     client.sendUTF( JSON.stringify({ type: 'name', data: names }));
                 }
 
-                console.log("WS -" + (await currentTime()) + '- User is known as: ' + username);
+                console.log(`WS -- ${await currentTime()} - User is known as: ${username}`);
             } else {
-                console.log(`WS - ${await currentTime()} - Received message from: ${username} : ${message.utf8Data}`);
+                console.log(`WS -- ${await currentTime()} - Received message from: ${username} : ${message.utf8Data}`);
 
                 const json = {
                     type: 'message',
-                    time: await currentTime(),
+                    time: await currentTime('message'),
                     text: message.utf8Data,
                     author: username
                 };
@@ -106,7 +109,7 @@ module.exports.webSocket = async server => {
         connection.on('close', async (connection) => {
 
             if (username !== false) {
-                console.log("WS - " + (await currentTime()) + " Peer "
+                console.log("WS -- " + (await currentTime()) + " Peer "
                     + connection + " disconnected.");
             }
             connections.forEach( client => {

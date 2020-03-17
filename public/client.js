@@ -60,7 +60,9 @@ const createMessage = async info => {
     newMessage.insertAdjacentHTML('beforeend', `
             <div>
                 <p class="name"></p>
-                <span>${sendTime}</span>
+                <div class="date">
+                    <span>${sendTime}</span>
+                </div>
             </div>
             <p></p>
     `);
