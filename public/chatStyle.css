@@ -14,6 +14,7 @@ hr {
   flex-direction: column;
   color: slategrey;
   font-family: Bahnschrift, monospace;
+  min-width: 80em;
 }
 .content .useless-stuff {
   display: flex;
@@ -30,7 +31,7 @@ hr {
 }
 .content .app-header {
   margin-bottom: 0.9em;
-  background: #285473;
+  background: #044f84;
   flex-direction: row;
 }
 .content .app-header .app-name {

@@ -14,17 +14,6 @@ const sendImagesButton = document.getElementsByClassName('submitImages')[0];
 
 const reader = new FileReader();
 
-
-// for(let i = 0; i < 5; i++) setTimeout(() => console.log(i), i * 1000);
-const currentTime = async () => {
-    const today = new Date();
-
-    let date = (today.getMonth()+1) + '-' + today.getDate();
-    let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-
-    return `${date} - ${time}`;
-};
-
 const createImage = async (src, name) => {
     const imageBlock = document.createElement('div');
     const imageTag = document.createElement('img');
@@ -66,7 +55,7 @@ const createUser = async info => {
 const createMessage = async info => {
     const newMessage = document.createElement('div');
     const name = document.createTextNode(`${info.author}`);
-    const sendTime = info.time || await currentTime();
+    const sendTime = info.time || info.date;
 
     newMessage.insertAdjacentHTML('beforeend', `
             <div>
@@ -256,3 +245,4 @@ if (!window.WebSocket) {
         await removeUser(user, connection);
     };
 }
+module.exports.currentTime = currentTime;

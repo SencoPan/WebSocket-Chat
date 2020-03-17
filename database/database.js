@@ -2,7 +2,7 @@ const redis = require('redis');
 
 let secretConf;
 
-if ( process.env.DEV === true ) {
+if ( process.env.DEV === "true" ) {
     secretConf = require('../config/secretConfig');
 } else {
     secretConf = { redis: {} }

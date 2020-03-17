@@ -1,8 +1,16 @@
 const WebSocket = require('websocket').server;
 const { database, receiveMessages, insertMessage } = require('../database/database');
-
 let connections = [];
 let names = [];
+
+const currentTime = async () => {
+    const today = new Date();
+
+    let date = today.getFullYear() + '.' + (today.getMonth()+1) + '.' + today.getDate();
+    let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+    return `${date} - ${time}`;
+};
 
 
 module.exports = async server => {
@@ -41,7 +49,7 @@ module.exports = async server => {
 
             if(data.type === 'image'){
                 for (let client of connections) {
-                    client.sendUTF( JSON.stringify({ type: 'image', data: data.data, author: username}));
+                    client.sendUTF( JSON.stringify({ type: 'image', data: data.data, author: username, date: await currentTime()}));
                 }
             }
             else if (data.type === 'disconnect'){
@@ -68,7 +76,7 @@ module.exports = async server => {
 
                 const json = {
                     type: 'message',
-                    time: Date().toString(),
+                    time: await currentTime(),
                     text: message.utf8Data,
                     author: username
                 };
